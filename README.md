@@ -1,4 +1,4 @@
-﻿# udap-devdays-2024
+﻿# udap-dotnet-tutorial
 Spin up a local UDAP playground.  Includes FHIR server, static certificates server UDAP Auth Server and UDAP IDP Server.
 
 
