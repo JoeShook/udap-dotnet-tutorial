@@ -11,8 +11,7 @@ The HL7 "[Security IG](http://hl7.org/fhir/us/udap-security/)" is a constraint o
 - UDAP® and the UDAP gear logo, ecosystem gears, and green lock designs are trademarks of UDAP.org. UDAP Draft Specifications are referenced and displayed in parts of this source code to document specification implementation.
 
 In 2023 the [udap-devdays-2023](https://github.com/JoeShook/udap-devdays-2023) presentation contained detailed instructions on how to setup Objectives 1 through 3.  That presentation was very detailed concerning setup.
-This years presentation will focus on Objective 4, Tiered OAuth and put less into the setup of the FHIR server and UDAP Auth Server details.  [udap-devdays-2023](https://github.com/JoeShook/udap-devdays-2023) is a good 
-reference.   
+This years presentation will focus on Objective 4, Tiered OAuth and put less into the setup of the FHIR server and UDAP Auth Server details.  [udap-devdays-2023](https://github.com/JoeShook/udap-devdays-2023) is a good reference.
 
 ## Objectives
 
