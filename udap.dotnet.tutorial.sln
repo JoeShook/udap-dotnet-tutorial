@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "udap.fhirserver.devdays", "udap.fhirserver.devdays\udap.fhirserver.devdays.csproj", "{F959A3FE-423F-4C61-BBA3-ADE7C9CF8C6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "udap.authserver.devdays", "udap.authserver.devdays\udap.authserver.devdays.csproj", "{A3AD3DE4-D372-4542-A9A5-759CBBF2708F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "udap.pki.devdays", "udap.pki.devdays\udap.pki.devdays.csproj", "{41A51168-EEAF-413E-A2DB-70CE6EB9F45E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "udap.certificates.server.devdays", "udap.certificates.server.devdays\udap.certificates.server.devdays.csproj", "{5251E303-4DB1-46B4-AB32-EF59FAF99957}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{6A824E94-D7F3-4783-B589-F3EE087A4EEB}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "udap.idp.server.devdays", "udap.idp.server.devdays\udap.idp.server.devdays.csproj", "{9CBDA329-E75F-41D5-AC91-851DFC5958B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F959A3FE-423F-4C61-BBA3-ADE7C9CF8C6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F959A3FE-423F-4C61-BBA3-ADE7C9CF8C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F959A3FE-423F-4C61-BBA3-ADE7C9CF8C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F959A3FE-423F-4C61-BBA3-ADE7C9CF8C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3AD3DE4-D372-4542-A9A5-759CBBF2708F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3AD3DE4-D372-4542-A9A5-759CBBF2708F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3AD3DE4-D372-4542-A9A5-759CBBF2708F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3AD3DE4-D372-4542-A9A5-759CBBF2708F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41A51168-EEAF-413E-A2DB-70CE6EB9F45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A51168-EEAF-413E-A2DB-70CE6EB9F45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A51168-EEAF-413E-A2DB-70CE6EB9F45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A51168-EEAF-413E-A2DB-70CE6EB9F45E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5251E303-4DB1-46B4-AB32-EF59FAF99957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5251E303-4DB1-46B4-AB32-EF59FAF99957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5251E303-4DB1-46B4-AB32-EF59FAF99957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5251E303-4DB1-46B4-AB32-EF59FAF99957}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CBDA329-E75F-41D5-AC91-851DFC5958B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CBDA329-E75F-41D5-AC91-851DFC5958B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CBDA329-E75F-41D5-AC91-851DFC5958B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CBDA329-E75F-41D5-AC91-851DFC5958B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {313D1178-C02C-4A1C-BA51-10CCC0F585F1}
+	EndGlobalSection
+EndGlobal

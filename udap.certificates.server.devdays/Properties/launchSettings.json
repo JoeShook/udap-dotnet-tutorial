@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "udap.certificates.server.devdays": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5034"
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json"
+}
