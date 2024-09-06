@@ -558,7 +558,6 @@ An actual revoked certificate will be reported like the following.  This can be 
 
 [![Udap Tiered OAuth Demo](https://storage.googleapis.com/dotnet_udap_content/DevDays2024TieredOAuth.jpg)](https://storage.googleapis.com/dotnet_udap_content/DevDays2024TieredOAuth.mp4)
 
-
 ## License
 
 This work is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](https://creativecommons.org/licenses/by-nc-nd/4.0/).
