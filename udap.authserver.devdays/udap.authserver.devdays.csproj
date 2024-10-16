@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Duende.IdentityServer" Version="7.0.6" />
+    <PackageReference Include="Duende.IdentityServer" Version="7.0.7" />
     <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
@@ -35,8 +35,8 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.8.1" />
     <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.0.0-rc9.14" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
-    <PackageReference Include="Udap.Server" Version="0.3.48" />
-    <PackageReference Include="Udap.UI" Version="0.3.48" />
+    <PackageReference Include="Udap.Server" Version="0.3.93" />
+    <PackageReference Include="Udap.UI" Version="0.3.93" />
   </ItemGroup>
 
   <ItemGroup>
