@@ -28,7 +28,7 @@
     <PackageReference Include="Serilog.AspNetCore" version="8.0.1" />
     <PackageReference Include="Udap.Server" Version="0.3.93" />
     <PackageReference Include="Udap.UI" Version="0.3.93" />
-    <PackageReference Include="Udap.Metadata.Server" Version="0.3.48" />
+    <PackageReference Include="Udap.Metadata.Server" Version="0.3.93" />
   </ItemGroup>
 
   <ItemGroup>
