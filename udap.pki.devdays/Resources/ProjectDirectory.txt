@@ -1,1 +1,1 @@
-C:\Source\GitHub\JoeShook\udap-devdays-2024\udap.pki.devdays 
+C:\Source\GitHub\JoeShook\udap-dotnet-tutorial\udap.pki.devdays 
