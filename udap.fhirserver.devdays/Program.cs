@@ -4,7 +4,10 @@ using Hl7.Fhir.DemoFileSystemFhirServer;
 using Hl7.Fhir.NetCoreApi;
 using Hl7.Fhir.WebApi;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Udap.Common.Certificates;
+using Udap.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +38,14 @@ builder.Services
 
     });
 
-builder.Services.AddUdapMetadataServer(builder.Configuration);
+builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection(Constants.UDAP_FILE_STORE_MANIFEST));
+
+
+builder.Services.AddUdapMetadataServer(builder.Configuration)
+    .AddSingleton<IPrivateCertificateStore>(sp =>
+        new IssuedCertificateStore(
+            sp.GetRequiredService<IOptionsMonitor<UdapFileCertStoreManifest>>(),
+            sp.GetRequiredService<ILogger<IssuedCertificateStore>>()));
 
 builder.Services.AddAuthentication(
         OidcConstants.AuthenticationSchemes.AuthorizationHeaderBearer)

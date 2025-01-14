@@ -94,7 +94,13 @@ dotnet add package Udap.Metadata.Server
 #### :boom: Include services
 
 ```csharp
-builder.Services.AddUdapMetadataServer(builder.Configuration);
+builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection(Constants.UDAP_FILE_STORE_MANIFEST));
+
+builder.Services.AddUdapMetadataServer(builder.Configuration)
+    .AddSingleton<IPrivateCertificateStore>(sp =>
+        new IssuedCertificateStore(
+            sp.GetRequiredService<IOptionsMonitor<UdapFileCertStoreManifest>>(),
+            sp.GetRequiredService<ILogger<IssuedCertificateStore>>()));
 ```
 
 
