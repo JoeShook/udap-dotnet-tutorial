@@ -103,6 +103,7 @@ builder.Services.AddUdapMetadataServer(builder.Configuration)
             sp.GetRequiredService<ILogger<IssuedCertificateStore>>()));
 ```
 
+**Note:** The developer can implement there own secure version of IPrivateCertificateStore.  In this case the IssuedCertificateStore is nothing more than a file store.
 
 #### :boom: Add Authentication
 
