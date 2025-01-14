@@ -15,7 +15,7 @@ This years presentation will focus on Objective 4, Tiered OAuth and put less int
 
 ## Objectives
 
-1. 🧩 Host UDAP Metadata on a FHIR Server and secure access f
+1. 🧩 Host UDAP Metadata on a FHIR Server 
 2. 🧩 Host UDAP Authorization Server and perform Dynamic Client Registration (DCR [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591))
 3. 🧩 Secure the FHIR Server with UDAP
 4. 🧩 Enabled Tiered OAuth and perform Dynamic Client Registration (DCR [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591)) with UDAP Auth Server actingas the client.
