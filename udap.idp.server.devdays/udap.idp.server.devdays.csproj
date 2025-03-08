@@ -41,7 +41,10 @@
 
   <ItemGroup>
     <None Update="CertificateStore\Community1\DevDaysCA_1.crt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="CertificateStore\Community1\intermediates\DevDaysSubCA_1.crt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="CertificateStore\Community1\issued\DevDaysIdpClient.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
