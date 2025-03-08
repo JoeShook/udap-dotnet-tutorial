@@ -5,9 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>.</DockerfileContext>
-    <UserSecretsId>a43ca60f-6626-403a-8ea7-5e46e148f7fa</UserSecretsId>
-    <!-- <UserSecretsId>ec9d7640-6c50-4561-bc5f-db25f99991bd</UserSecretsId> -->
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerfileRunArguments>-p "5102:8081" </DockerfileRunArguments>
+    <UserSecretsId>7ce4bc31-1a22-45f6-98f0-dec2badc74b5</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -40,18 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CertificateStore\Community1\DevDaysCA_1.crt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="CertificateStore\Community1\issued\DevDaysIdpClient.pfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="CertificateStore\Community2\DevDaysCA_2.crt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="CertificateStore\Community3\DevDaysCA_3.crt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="CertificateStore\Community1\issued\" />
+    <Folder Include="CertificateStore\Community2\issued\" />
+    <Folder Include="CertificateStore\Community3\issued\" />
   </ItemGroup>
 
 </Project>

@@ -18,12 +18,15 @@ using X509Extensions = Org.BouncyCastle.Asn1.X509.X509Extensions;
 
 Console.WriteLine("Generating PKI for UDAP DevDays");
 
+
+
 string staticCertPort = "5034";
 string certificateStore = $"CertificateStore";
 string certificateStoreFullPath = $"{BaseDir()}/{certificateStore}";
 
 var certName = "DevDaysFhirServerRSAClient";
 var community = "Community1";
+
 
 MakeAuthorities($"{certificateStore}/{community}",  //communityStorePath
     "DevDaysCA_1",                                  //anchorName
@@ -149,6 +152,70 @@ var subCA = new X509Certificate2($"{certificateStoreFullPath}/Community3/interme
 var revokeCertificate = new X509Certificate2($"{certificateStoreFullPath}/Community3/issued/DevDaysRevokedClient.pfx", "udap-test");
 
 RevokeCertificate(subCA, revokeCertificate, $"{certificateStoreFullPath}/Community3/crl/DevDaysSubCA_3.crl");
+
+
+
+var baseDir = BaseDir();
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community1/DevDaysCA_1.crt",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/Community1/DevDaysCA_1.crt",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community2/DevDaysCA_2.crt",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/Community2/DevDaysCA_2.crt",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community3/DevDaysCA_3.crt",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/Community3/DevDaysCA_3.crt",
+    true);
+
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community1/issued/DevDaysFhirServerRSAClient.pfx",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/{community}/issued/DevDaysFhirServerRSAClient.pfx",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community1/issued/DevDaysIdpClient.pfx",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/{community}/issued/DevDaysIdpClient.pfx",
+    true);
+
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community2/issued/DevDaysECDSAClient.pfx",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/Community2/issued/DevDaysECDSAClient.pfx",
+    true);
+
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community3/issued/DevDaysRevokedClient.pfx",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/Community3/issued/DevDaysRevokedClient.pfx",
+    true);
+
+
+
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community1/DevDaysCA_1.crt",
+    $"{baseDir}/../udap.idp.server.devdays/{certificateStore}/Community1/DevDaysCA_1.crt",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community1/intermediates/DevDaysSubCA_1.crt",
+    $"{baseDir}/../udap.idp.server.devdays/{certificateStore}/Community1/intermediates/DevDaysSubCA_1.crt",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community1/issued/DevDaysIdpClient.pfx",
+    $"{baseDir}/../udap.idp.server.devdays/{certificateStore}/Community1/issued/DevDaysIdpClient.pfx",
+    true);
+
+
+
+
 
 void MakeAuthorities(string communityStorePath,
     string anchorName,
@@ -657,3 +724,4 @@ static string BaseDir()
 
     return streamReader.ReadToEnd().Trim();
 }
+

@@ -5,8 +5,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <!-- <UserSecretsId>d6c54789-88a5-4e3e-9e0e-0fb44446408b</UserSecretsId> -->
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerfileRunArguments>-p "5202:8081" </DockerfileRunArguments>
+    <UserSecretsId>1bd7a6fc-68d4-40f0-8605-68f71701b79d</UserSecretsId>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,10 +35,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CertificateStore\" />
+    <Folder Include="CertificateStore\Community1\issued\" />
+    <Folder Include="CertificateStore\Community1\intermediates\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CertificateStore\Community1\DevDaysCA_1.crt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CertificateStore\Community1\issued\DevDaysIdpClient.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

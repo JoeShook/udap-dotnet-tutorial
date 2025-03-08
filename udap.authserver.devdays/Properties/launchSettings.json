@@ -13,6 +13,10 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "UdapIdpBaseUrl": "https://localhost:5102"
+      },
       "publishAllPorts": true,
       "useSSL": true
     }

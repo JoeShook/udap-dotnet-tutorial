@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "udap.authserver.devdays": "StartDebugging",
+        "udap.certificates.server.devdays": "StartDebugging",
+        "udap.fhirserver.devdays": "StartDebugging",
+        "udap.idp.server.devdays": "StartDebugging"
+      }
+    }
+  }
+}

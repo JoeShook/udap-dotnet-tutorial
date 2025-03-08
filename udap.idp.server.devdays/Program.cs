@@ -69,7 +69,7 @@ app.UseHsts();
 app.UseSerilogRequestLogging();
 
 
-await SeedData.InitializeDatabase(app, "../../../../udap.pki.devdays/CertificateStore", Log.Logger);
+await SeedData.InitializeDatabase(app, "CertificateStore", Log.Logger);
 
 // uncomment if you want to add a UI
 app.UseStaticFiles();

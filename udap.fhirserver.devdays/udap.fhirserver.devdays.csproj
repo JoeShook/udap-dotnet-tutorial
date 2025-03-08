@@ -4,10 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <!-- <UserSecretsId>d52e4cf2-8a82-4bee-8a96-105906242831</UserSecretsId> -->
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>.</DockerfileContext>
-    <DockerfileFastModeStage>debug</DockerfileFastModeStage>
+    <!-- <DockerfileFastModeStage>debug</DockerfileFastModeStage> -->
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerfileRunArguments>-p "7017:8081" -p "5017:8080"</DockerfileRunArguments>
+    <UserSecretsId>eeec10df-e86a-4abb-b93d-377bd8797a35</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

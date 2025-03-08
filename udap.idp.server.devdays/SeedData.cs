@@ -101,7 +101,7 @@ public static class SeedData
         // Anchor localhost_community for Udap.Identity.Provider1
         //
         var anchorLocalhostCert = new X509Certificate2(
-            Path.Combine(assemblyPath!, certStoreBasePath, "Community1/DevDaysCA_1.crt"));
+            Path.Combine(certStoreBasePath, "Community1/DevDaysCA_1.crt"));
 
         if ((await clientRegistrationStore.GetAnchors("udap://Community1"))
             .All(a => a.Thumbprint != anchorLocalhostCert.Thumbprint))
@@ -127,7 +127,7 @@ public static class SeedData
             var x509Certificate2Collection = await clientRegistrationStore.GetIntermediateCertificates();
 
             var intermediateCert = new X509Certificate2(
-                Path.Combine(assemblyPath!, certStoreBasePath, "Community1/intermediates/DevDaysSubCA_1.crt"));
+                Path.Combine(certStoreBasePath, "Community1/intermediates/DevDaysSubCA_1.crt"));
 
             if (x509Certificate2Collection != null && x509Certificate2Collection.ToList()
                     .All(r => r.Thumbprint != intermediateCert.Thumbprint))

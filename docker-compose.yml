@@ -1,0 +1,27 @@
+services:
+  udap.authserver.devdays:
+    image: ${DOCKER_REGISTRY-}udapauthserverdevdays
+    build:
+      context: .
+      dockerfile: udap.authserver.devdays/Dockerfile
+
+  udap.certificates.server.devdays:
+    image: ${DOCKER_REGISTRY-}udapcertificatesserverdevdays
+    build:
+      context: .
+      dockerfile: udap.certificates.server.devdays/Dockerfile
+
+      
+  udap.fhirserver.devdays:
+    image: ${DOCKER_REGISTRY-}udapfhirserverdevdays
+    build:
+      context: .
+      dockerfile: udap.fhirserver.devdays/Dockerfile
+
+
+  udap.idp.server.devdays:
+    image: ${DOCKER_REGISTRY-}udapidpserverdevdays
+    build:
+      context: .
+      dockerfile: udap.idp.server.devdays/Dockerfile
+
