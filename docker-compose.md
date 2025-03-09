@@ -14,6 +14,19 @@ Extract the existing localhost dev cert certificate from the user keystore.  The
 During extraction include the private key and set the password to ```password```.
 Save the certificate in ${USERPROFILE}/.aspnet/https.  This will allow docker-compose.override.yml to mount the certificate into the container.
 
+### EMR Direct UDAP Client Certificate
+
+If you have a EMR Direct issued client certificate you would like to add to the UdapEd Container can pick it up
+then save the certificate in ${USERPROFILE}/.aspnet/https.  This will allow docker-compose.yml to mount the certificate into the container.
+
+Second you will need to set supply a password to open the P12 file via the SampleC environment variable.  Create a docker-compose.override.yml file in the root of the repository with the following content:
+```yaml
+services:
+      
+  udaped:    
+    environment:
+      - sampleKeyC=yourpassword
+```
 
 ## Steps
 

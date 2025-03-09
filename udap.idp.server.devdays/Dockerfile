@@ -28,5 +28,4 @@ RUN dotnet publish "./udap.idp.server.devdays.csproj" -c $BUILD_CONFIGURATION -o
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build /app/aspnetDevCert.pfx ./aspnetDevCert.pfx
 ENTRYPOINT ["dotnet", "udap.idp.server.devdays.dll"]

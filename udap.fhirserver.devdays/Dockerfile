@@ -17,7 +17,6 @@ RUN dotnet restore "./udap.fhirserver.devdays/udap.fhirserver.devdays.csproj"
 COPY . .
 WORKDIR "/src/udap.fhirserver.devdays"
 RUN dotnet build "./udap.fhirserver.devdays.csproj" -c $BUILD_CONFIGURATION -o /app/build
-COPY ["aspnetDevCert.pfx", "/app/aspnetDevCert.pfx"]
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
@@ -28,5 +27,4 @@ RUN dotnet publish "./udap.fhirserver.devdays.csproj" -c $BUILD_CONFIGURATION -o
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build /app/aspnetDevCert.pfx ./aspnetDevCert.pfx
 ENTRYPOINT ["dotnet", "udap.fhirserver.devdays.dll"]
