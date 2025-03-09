@@ -40,6 +40,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\aspire.ServiceDefaults\aspire.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="CertificateStore\Community1\DevDaysCA_1.crt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -7,6 +7,8 @@ using Udap.Server.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 // Add services to the container.
 
 builder.Host.UseSerilog((ctx, lc) => lc
@@ -61,6 +63,8 @@ builder.Services.AddUdapServerAsIdentityProvider(
 
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 

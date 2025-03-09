@@ -11,6 +11,8 @@ using Udap.Client.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
     .Enrich.FromLogContext()
@@ -76,6 +78,8 @@ builder.Services.AddAuthentication()
     });
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 //
 // Configure the HTTP request pipeline.

@@ -11,13 +11,11 @@ services:
       context: .
       dockerfile: udap.certificates.server.devdays/Dockerfile
 
-      
   udap.fhirserver.devdays:
     image: ${DOCKER_REGISTRY-}udapfhirserverdevdays
     build:
       context: .
       dockerfile: udap.fhirserver.devdays/Dockerfile
-
 
   udap.idp.server.devdays:
     image: ${DOCKER_REGISTRY-}udapidpserverdevdays
@@ -25,3 +23,6 @@ services:
       context: .
       dockerfile: udap.idp.server.devdays/Dockerfile
 
+  udaped:
+    image: ghcr.io/joeshook/udaped:v0.4.4.27
+    

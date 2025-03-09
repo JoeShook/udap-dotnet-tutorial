@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\aspire.ServiceDefaults\aspire.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="CertificateStore\Community1\issued\DevDaysFhirServerRSAClient.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

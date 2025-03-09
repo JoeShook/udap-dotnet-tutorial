@@ -5,12 +5,11 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - UdapIdpBaseUrl=https://localhost:5102
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetDevCert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/aspnetDevCert.pfx
     ports:
       - "5102:8081"
     volumes:
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
+      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
 
   udap.certificates.server.devdays:
     environment:
@@ -25,12 +24,12 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetDevCert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/aspnetDevCert.pfx
     ports:
       - "5017:8080"
       - "7017:8081"
     volumes:
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
   
   udap.idp.server.devdays:
     environment:
@@ -39,8 +38,21 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - UdapIdpBaseUrl=https://localhost:5202
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=aspnetDevCert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/aspnetDevCert.pfx
     ports:
       - "5202:8081"
     volumes:
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
+
+  udaped:    
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/aspnetDevCert.pfx
+    ports:
+      - "7041:8081"
+      - "5171:8080"
+    volumes:
+      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro

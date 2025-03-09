@@ -8,6 +8,13 @@ Ensure you have the following installed on your machine:
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
+### Asp.NET Development Certificate
+
+Extract the existing localhost dev cert certificate from the user keystore.  The certificate friendly name is ```ASP.NET Core HTTPS development certificate```.
+During extraction include the private key and set the password to ```password```.
+Save the certificate in ${USERPROFILE}/.aspnet/https.  This will allow docker-compose.override.yml to mount the certificate into the container.
+
+
 ## Steps
 
 1. **Clone the Repository**

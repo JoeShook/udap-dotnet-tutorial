@@ -17,7 +17,7 @@ RUN dotnet restore "./udap.idp.server.devdays/udap.idp.server.devdays.csproj"
 COPY . .
 WORKDIR "/src/udap.idp.server.devdays"
 RUN dotnet build "./udap.idp.server.devdays.csproj" -c $BUILD_CONFIGURATION -o /app/build
-COPY ["aspnetDevCert.pfx", "/app/aspnetDevCert.pfx"]
+
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
