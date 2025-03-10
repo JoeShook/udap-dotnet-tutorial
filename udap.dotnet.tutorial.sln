@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{6A82
 	ProjectSection(SolutionItems) = preProject
 		aspnetDevCert.pfx = aspnetDevCert.pfx
 		docker-compose.md = docker-compose.md
+		docker-compose.yml = docker-compose.yml
 		dotnetAspire.md = dotnetAspire.md
 		global.json = global.json
 		nuget.config = nuget.config

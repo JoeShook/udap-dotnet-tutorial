@@ -3,7 +3,7 @@ name: Build Docker Images
 on:
   workflow_dispatch:
     inputs:
-      name:
+      tagName:
         description: 'Tag'
         required: true
         default: 'latest'
@@ -24,18 +24,13 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
 
-    - name: Convert repository name to lowercase
-      id: to_lowercase
-      run: echo "::set-output name=lower_repo::${GITHUB_REPOSITORY,,}"
-
-
     - name: Build and push udap.authserver.devdays Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
         file: ./udap.authserver.devdays/Dockerfile
         push: true
-        tags: ghcr.io/${{ steps.to_lowercase.outputs.lower_repo }}:${{ github.event.inputs.name }}
+        tags: ghcr.io/udapauthserverdevdays:${{ github.event.inputs.tagName }}
 
 
     - name: Build and push udap.certificates.server.devdays Docker image
@@ -44,7 +39,7 @@ jobs:
         context: .
         file: ./udap.certificates.server.devdays/Dockerfile
         push: true
-        tags: ghcr.io/${{ steps.to_lowercase.outputs.lower_repo }}:${{ github.event.inputs.name }}
+        tags: ghcr.io/udapcertificatesserverdevdays:${{ github.event.inputs.tagName }}
 
 
     - name: Build and push udap.fhirserver.devdays Docker image
@@ -53,7 +48,7 @@ jobs:
         context: .
         file: ./udap.fhirserver.devdays/Dockerfile
         push: true
-        tags: ghcr.io/${{ steps.to_lowercase.outputs.lower_repo }}:${{ github.event.inputs.name }}
+        tags: ghcr.io/udapfhirserverdevdays:${{ github.event.inputs.tagName }}
 
 
     - name: Build and push udap.idp.server.devdays Docker image
@@ -62,7 +57,7 @@ jobs:
         context: .
         file: ./udap.idp.server.devdays/Dockerfile
         push: true
-        tags: ghcr.io/${{ steps.to_lowercase.outputs.lower_repo }}:${{ github.event.inputs.name }}
+        tags: ghcr.io/udapidpserverdevdays:${{ github.event.inputs.tagName }}
   
   
 
