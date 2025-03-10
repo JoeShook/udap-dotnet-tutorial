@@ -23,7 +23,7 @@ This years presentation will focus on Objective 4, Tiered OAuth and put less int
 ## Container experiences
 
   - For instructions on how to run the project using Docker Compose, see [Running the UDAP Dotnet Tutorial with Docker Compose](./docker-compose.md).
-  - For instructions on how to run the project using Dotnet Aspire, see [Running the UDAP Dotnet Tutorial with Docker Compose](./dotnetAspire.md).
+  - For instructions on how to run the project using Dotnet Aspire, see [Running the UDAP Dotnet Tutorial with .NET Aspire](./dotnetAspire.md).
 
 ## Things to look out for
 
