@@ -8,6 +8,28 @@ Ensure you have the following installed on your machine:
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [Aspire CLI](https://github.com/dotnet/aspire)
 
+
+### Asp.NET Development Certificate for TLS
+
+Extract the existing localhost dev cert certificate from the user keystore.  The certificate friendly name is ```ASP.NET Core HTTPS development certificate```.
+During extraction include the private key and set the password to ```password```.
+Save the certificate in the ./CertificateStore folder.  This will allow the aspire.AppHost project to mount the certificate into the udaped container.
+
+### EMR Direct UDAP Client Certificate
+
+If you have a EMR Direct issued client certificate you would like to add to the UdapEd Container can pick it up
+then save the certificate in ${USERPROFILE}/.aspnet/https.  This will allow docker-compose.yml to mount the certificate into the container.
+
+```json
+{
+  "sampleKeyC": "yourpassword"
+}
+```
+
+Second you will need to supply a password to open the P12 file via the SampleC environment variable.  
+Add the following sampleKeyC property to the ```aspire.AppHost``` project in the ```appsettings.json``` file.
+If you are familiar with secrets.json via the UserSecretsId link in the ```aspire.AppHost``` project then add the password there.
+
 ## Steps
 
 1. **Clone the Repository**

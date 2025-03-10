@@ -25,20 +25,6 @@ This years presentation will focus on Objective 4, Tiered OAuth and put less int
   - For instructions on how to run the project using Docker Compose, see [Running the UDAP Dotnet Tutorial with Docker Compose](./docker-compose.md).
   - For instructions on how to run the project using Dotnet Aspire, see [Running the UDAP Dotnet Tutorial with Docker Compose](./dotnetAspire.md).
 
-## Prerequisites
-
-Clone the udap-dotnet repository.
-
-````cli
-git clone https://github.com/udap-tools/udap-dotnet.git
-````
-
-Ensure you can compile and run UdapEd.Server ahead of time.  It requires .NET 8.0.
-
-We will run the UdapEd.Server project locally to test Discovery, DCR, Token Access and finally request a resource.  
-Then we will let the user include the base URL of a preferred OpenID Connect Identity Provider (IdP).
-
-
 ## Things to look out for
 
 If the developer regenerates certificates with the udap.pki.devdays project during the Tutorial delete the udap.authserver.devdays.EntityFramework.db database.  And restart udap.authserver.devdays.
