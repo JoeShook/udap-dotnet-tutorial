@@ -30,7 +30,7 @@ jobs:
         context: .
         file: ./udap.authserver.devdays/Dockerfile
         push: true
-        tags: ghcr.io/udapauthserverdevdays:${{ github.event.inputs.tagName }}
+        tags: ghcr.io/joeshook/udapauthserverdevdays:${{ github.event.inputs.tagName }}
 
 
     - name: Build and push udap.certificates.server.devdays Docker image
@@ -39,7 +39,7 @@ jobs:
         context: .
         file: ./udap.certificates.server.devdays/Dockerfile
         push: true
-        tags: ghcr.io/udapcertificatesserverdevdays:${{ github.event.inputs.tagName }}
+        tags: ghcr.io/joeshook/udapcertificatesserverdevdays:${{ github.event.inputs.tagName }}
 
 
     - name: Build and push udap.fhirserver.devdays Docker image
@@ -48,7 +48,7 @@ jobs:
         context: .
         file: ./udap.fhirserver.devdays/Dockerfile
         push: true
-        tags: ghcr.io/udapfhirserverdevdays:${{ github.event.inputs.tagName }}
+        tags: ghcr.io/joeshook/udapfhirserverdevdays:${{ github.event.inputs.tagName }}
 
 
     - name: Build and push udap.idp.server.devdays Docker image
@@ -57,7 +57,7 @@ jobs:
         context: .
         file: ./udap.idp.server.devdays/Dockerfile
         push: true
-        tags: ghcr.io/udapidpserverdevdays:${{ github.event.inputs.tagName }}
+        tags: ghcr.io/joeshook/udapidpserverdevdays:${{ github.event.inputs.tagName }}
   
   
 
