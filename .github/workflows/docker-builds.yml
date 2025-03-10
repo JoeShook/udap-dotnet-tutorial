@@ -23,17 +23,20 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+
     - name: Convert repository name to lowercase
       id: to_lowercase
       run: echo "::set-output name=lower_repo::${GITHUB_REPOSITORY,,}"
+
 
     - name: Build and push udap.authserver.devdays Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./udap-dotnet-tutorial/Dockerfile
+        file: ./udap.authserver.devdays/Dockerfile
         push: true
         tags: ghcr.io/${{ steps.to_lowercase.outputs.lower_repo }}:${{ github.event.inputs.name }}
+
 
     - name: Build and push udap.certificates.server.devdays Docker image
       uses: docker/build-push-action@v5
