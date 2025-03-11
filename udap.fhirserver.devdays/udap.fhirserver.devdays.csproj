@@ -15,7 +15,7 @@
     <PackageReference Include="brianpos.Fhir.R4B.DemoFileSystemFhirServer" Version="5.11.3-rc1" />
     <PackageReference Include="brianpos.Fhir.R4B.WebApi.AspNetCore" Version="5.11.3-rc1" />
     <PackageReference Include="Hl7.Fhir.Specification.R4B" Version="5.11.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.14" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.6.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
     <PackageReference Include="Udap.Metadata.Server" Version="0.4.5" />
