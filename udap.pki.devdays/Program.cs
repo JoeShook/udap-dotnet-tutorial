@@ -154,6 +154,12 @@ var revokeCertificate = new X509Certificate2($"{certificateStoreFullPath}/Commun
 RevokeCertificate(subCA, revokeCertificate, $"{certificateStoreFullPath}/Community3/crl/DevDaysSubCA_3.crl");
 
 
+//
+// tls client and use the DevDaysCA_1.crt as the CA
+//
+GenerateTlsCertificate($"{BaseDir()}/{certificateStore}/tls", $"{BaseDir()}/{certificateStore}/{community}/DevDaysCA_1.pfx");
+
+
 
 var baseDir = BaseDir();
 
@@ -214,6 +220,21 @@ File.Copy(
     true);
 
 
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/Community1/DevDaysCA_1.crt",
+    $"{baseDir}/../CertificateStore/DevDaysCA_1.crt",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/tls/udap-tutorial-dev-tls-cert.pfx",
+    $"{baseDir}/../CertificateStore/udap-tutorial-dev-tls-cert.pfx",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/tls/udap-tutorial-dev-tls-cert.cer",
+    $"{baseDir}/../CertificateStore/udap-tutorial-dev-tls-cert.cer",
+    true);
 
 
 
@@ -724,4 +745,64 @@ static string BaseDir()
 
     return streamReader.ReadToEnd().Trim();
 }
+
+static void GenerateTlsCertificate(string tlsStoreFullPath, string caCertificate)
+{
+    using var caCert = new X509Certificate2(caCertificate, "udap-test", X509KeyStorageFlags.Exportable);
+
+    using RSA rsaHostDockerInternal = RSA.Create(2048);
+
+    var hostDockerInternal = new CertificateRequest(
+        "CN=host.docker.internal, OU=udap tutorial, O=Fhir Coding, L=Portland, S=Oregon, C=US",
+        rsaHostDockerInternal,
+        HashAlgorithmName.SHA256,
+        RSASignaturePadding.Pkcs1);
+
+    hostDockerInternal.CertificateExtensions.Add(
+        new X509BasicConstraintsExtension(false, false, 0, true));
+
+    hostDockerInternal.CertificateExtensions.Add(
+        new X509KeyUsageExtension(
+            X509KeyUsageFlags.DigitalSignature,
+            true));
+
+    hostDockerInternal.CertificateExtensions.Add(
+        new X509SubjectKeyIdentifierExtension(hostDockerInternal.PublicKey, false));
+
+    AddAuthorityKeyIdentifier(caCert, hostDockerInternal);
+    // hostDockerInternal.CertificateExtensions.Add(MakeCdp(SureFhirLabsRootCrl)); 
+
+    var subAltNameBuilder = new SubjectAlternativeNameBuilder();
+    subAltNameBuilder.AddDnsName("host.docker.internal");
+    subAltNameBuilder.AddDnsName("localhost");
+    var x509Extension = subAltNameBuilder.Build();
+    hostDockerInternal.CertificateExtensions.Add(x509Extension);
+
+    hostDockerInternal.CertificateExtensions.Add(
+        new X509EnhancedKeyUsageExtension(
+            new OidCollection {
+                            new Oid("1.3.6.1.5.5.7.3.2"), // TLS Client auth
+                            new Oid("1.3.6.1.5.5.7.3.1"), // TLS Server auth
+            },
+            true));
+
+    using (var clientCert = hostDockerInternal.Create(
+                caCert,
+                DateTimeOffset.UtcNow.AddDays(-1),
+                DateTimeOffset.UtcNow.AddYears(2),
+                new ReadOnlySpan<byte>(RandomNumberGenerator.GetBytes(16))))
+    {
+        // Do something with these certs, like export them to PFX,
+        // or add them to an X509Store, or whatever.
+        var sslCert = clientCert.CopyWithPrivateKey(rsaHostDockerInternal);
+
+        tlsStoreFullPath.EnsureDirectoryExists();
+        var clientBytes = sslCert.Export(X509ContentType.Pkcs12, "udap-test");
+        File.WriteAllBytes($"{tlsStoreFullPath}/udap-tutorial-dev-tls-cert.pfx", clientBytes);
+        char[] certificatePem = PemEncoding.Write("CERTIFICATE", clientCert.RawData);
+        File.WriteAllBytes($"{tlsStoreFullPath}/udap-tutorial-dev-tls-cert.cer", certificatePem.Select(c => (byte)c).ToArray());
+    }
+}
+
+
 

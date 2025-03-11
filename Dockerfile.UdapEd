@@ -1,0 +1,8 @@
+# Use the specified image as the base image
+FROM ghcr.io/joeshook/udaped:v0.4.4.30
+
+# Copy the CA certificate to the appropriate directory
+COPY ./CertificateStore/DevDaysCA_1.crt /etc/ssl/certs
+
+# Update the CA certificates
+RUN update-ca-certificates

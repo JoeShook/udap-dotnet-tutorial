@@ -4,12 +4,12 @@ services:
     environment:
       - ASPNETCORE_HTTPS_PORTS=8081
       - UdapIdpBaseUrl=https://host.docker.internal:5102
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=udap-test
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/udap-tutorial-dev-tls-cert.pfx
     ports:
       - "5102:8081"
     volumes:
-      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
+      - ./CertificateStore:/home/app/.aspnet/https:ro
 
   udap.certificates.server.devdays:
     image: ghcr.io/joeshook/udapcertificatesserverdevdays:latest
@@ -23,36 +23,39 @@ services:
     environment:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=udap-test
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/udap-tutorial-dev-tls-cert.pfx
     ports:
       - "5017:8080"
       - "7017:8081"
     volumes:
-      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
+      - ./CertificateStore:/home/app/.aspnet/https:ro
 
   udap.idp.server.devdays:
     image: ghcr.io/joeshook/udapidpserverdevdays:latest    
     environment:
       - ASPNETCORE_HTTPS_PORTS=8081
       - UdapIdpBaseUrl=https://host.docker.internal:5202
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=udap-test
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/udap-tutorial-dev-tls-cert.pfx
     ports:
       - "5202:8081"
     volumes:
-      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
+      - ./CertificateStore:/home/app/.aspnet/https:ro
 
   udaped:
-    image: ghcr.io/joeshook/udaped:v0.4.4.30
+    image: ${DOCKER_REGISTRY-}udaped-tutorial
+    build:
+      context: .
+      dockerfile: Dockerfile.UdapEd
     environment:
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=udap-test
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/udap-tutorial-dev-tls-cert.pfx      
     ports:
       - "7041:8081"
     volumes:
-      - ${USERPROFILE}/.aspnet/https:/home/app/.aspnet/https:ro
+      - ./CertificateStore:/home/app/.aspnet/https:ro
       - ./CertificateStore:/app/CertificateStore:ro
 
     

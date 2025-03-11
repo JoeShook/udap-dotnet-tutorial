@@ -6,7 +6,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "UdapIdpBaseUrl": "https://host.docker.internal:5202",
-        "ASPNETCORE_Kestrel__Certificates__Default__Password": "password",
+        "ASPNETCORE_Kestrel__Certificates__Default__Password": "udap-test",
         "ASPNETCORE_Kestrel__Certificates__Default__Path": "../CertificateStore/udap-tutorial-dev-tls-cert.pfx"
       },
       "dotnetRunMessages": true,

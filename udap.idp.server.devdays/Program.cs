@@ -64,6 +64,8 @@ builder.Services.AddUdapServerAsIdentityProvider(
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
 app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
