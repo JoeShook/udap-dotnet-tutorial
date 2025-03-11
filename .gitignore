@@ -401,3 +401,4 @@ FodyWeavers.xsd
 *.db-wal
 *.p12
 docker-compose.override.yml
+CertificateStore/udap-tutorial-dev-tls-cert.cer
