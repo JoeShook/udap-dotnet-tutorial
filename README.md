@@ -25,26 +25,19 @@ This years presentation will focus on Objective 4, Tiered OAuth and put less int
 First off to accomodate a container experience and to allow the UdapEd tool running as a containter to trust and discover
 other services running in other containers or running on your local desktop we will be using a domain name convention of
 host.docker.internal in addition to localhost.  So we will need a TLS developer certificate instead of the typical ASP.NET developer certificate.
-The following will create a self-signed certificate for localhost and host.docker.internal.  The certificate will be placed in the LocalMachine\My store.
 
-```powershell
-$cert = New-SelfSignedCertificate -DnsName "host.docker.internal", "localhost" -CertStoreLocation "Cert:\LocalMachine\My" -FriendlyName "Udap Tutorial Dev Cert" -NotAfter (Get-Date).AddYears(20)
-$password = ConvertTo-SecureString -String "password" -Force -AsPlainText
-Export-PfxCertificate -Cert $cert -FilePath "./CertificateStore/udap-tutorial-dev-tls-cert.pfx" -Password $password
-Export-Certificate -Cert $cert -FilePath "./CertificateStore/udap-tutorial-dev-tls-cert.cer"
-```
+Below in the udap.pki.devdays section the TLS certificate will be generated from the DevDaysCA_1.crt certificate which we will use as the CA.  
+this should automatically be added to the UdapEd-Tutorial container that is included in the Dockerfile.UdapEd file and thus available via docker-compose.yml 
+and the .NET Aspire project.
 
-Install Powershell on Mac:
-
-```
-brew install --cask powershell
-```
-
+ - TLS Certificate: ./CertificateStore/udap-tutorial-dev-tls-cert.pfx
+ - Certificate Authority: ./CertificateStore/DevDaysCA_1.crt
+ 
 ### Trusting the Certificate
-- **Windows:** You can add the certificate to the Trusted Root Certification Authorities using the Microsoft Management Console (MMC).
-- **Mac:** You can add the certificate to the keychain using the following command:
+- **Windows:** You can add the certificate authority to the Trusted Root Certification Authorities using the Microsoft Management Console (MMC).
+- **Mac:** You can add the certificate authority to the keychain using the following command:
 ```bash
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /CertificateStore/udap-tutorial-dev-tls-cert.cer
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /CertificateStore/DevDaysCA_1.crt
 ```
 
 ## Container experiences

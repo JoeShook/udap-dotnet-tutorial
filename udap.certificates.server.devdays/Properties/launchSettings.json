@@ -5,7 +5,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://host.docker.internal:5034"
+        "ASPNETCORE_URLS": "http://+:5034"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://*:5034"
