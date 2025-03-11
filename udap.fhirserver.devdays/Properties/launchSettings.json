@@ -5,10 +5,12 @@
       "launchBrowser": true,
       "launchUrl": "fhir/r4",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_Kestrel__Certificates__Default__Password": "password",
+        "ASPNETCORE_Kestrel__Certificates__Default__Path": "../CertificateStore/udap-tutorial-dev-tls-cert.pfx"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7017;http://localhost:5017"
+      "applicationUrl": "https://*:7017;http://*:5017"
     },
     "Docker": {
       "commandName": "Docker",

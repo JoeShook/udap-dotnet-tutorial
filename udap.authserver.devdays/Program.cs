@@ -44,7 +44,7 @@ builder.Services.AddUdapServer(
             b.UseSqlite(connectionString,
                 dbOpts =>
                     dbOpts.MigrationsAssembly(typeof(Program).Assembly.FullName)),
-    baseUrl: "https://localhost:5102"
+    baseUrl: "https://host.docker.internal:5102"
     )
     .AddUdapResponseGenerators()
     .AddSmartV2Expander();

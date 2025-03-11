@@ -20,6 +20,33 @@ This years presentation will focus on Objective 4, Tiered OAuth and put less int
 3. 🧩 Secure the FHIR Server with UDAP
 4. 🧩 Enabled Tiered OAuth and perform Dynamic Client Registration (DCR [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591)) with UDAP Auth Server acting as the client.
 
+## Prerequisites
+
+First off to accomodate a container experience and to allow the UdapEd tool running as a containter to trust and discover
+other services running in other containers or running on your local desktop we will be using a domain name convention of
+host.docker.internal in addition to localhost.  So we will need a TLS developer certificate instead of the typical ASP.NET developer certificate.
+The following will create a self-signed certificate for localhost and host.docker.internal.  The certificate will be placed in the LocalMachine\My store.
+
+```powershell
+$cert = New-SelfSignedCertificate -DnsName "host.docker.internal", "localhost" -CertStoreLocation "Cert:\LocalMachine\My" -FriendlyName "Udap Tutorial Dev Cert" -NotAfter (Get-Date).AddYears(20)
+$password = ConvertTo-SecureString -String "password" -Force -AsPlainText
+Export-PfxCertificate -Cert $cert -FilePath "./CertificateStore/udap-tutorial-dev-tls-cert.pfx" -Password $password
+Export-Certificate -Cert $cert -FilePath "./CertificateStore/udap-tutorial-dev-tls-cert.cer"
+```
+
+Install Powershell on Mac:
+
+```
+brew install --cask powershell
+```
+
+### Trusting the Certificate
+- **Windows:** You can add the certificate to the Trusted Root Certification Authorities using the Microsoft Management Console (MMC).
+- **Mac:** You can add the certificate to the keychain using the following command:
+```bash
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /CertificateStore/udap-tutorial-dev-tls-cert.cer
+```
+
 ## Container experiences
 
   - For instructions on how to run the project using Docker Compose, see [Running the UDAP Dotnet Tutorial with Docker Compose](./docker-compose.md).
@@ -157,7 +184,7 @@ The pipeline configuration should look like the following when complete.
 
 ```json
   "Jwt": {
-      "Authority": "https://localhost:5102"
+      "Authority": "https://host.docker.internal:5102"
 }
 ```
 
@@ -171,9 +198,9 @@ The pipeline configuration should look like the following when complete.
       {
         "Community": "udap://Community1",
         "SignedMetadataConfig": {
-          "AuthorizationEndPoint": "https://localhost:5002/connect/authorize",
-          "TokenEndpoint": "https://localhost:5002/connect/token",
-          "RegistrationEndpoint": "https://localhost:5002/connect/register"
+          "AuthorizationEndPoint": "https://host.docker.internal:5002/connect/authorize",
+          "TokenEndpoint": "https://host.docker.internal:5002/connect/token",
+          "RegistrationEndpoint": "https://host.docker.internal:5002/connect/register"
         }
       },
       {
@@ -181,19 +208,19 @@ The pipeline configuration should look like the following when complete.
         "SignedMetadataConfig": {
           "RegistrationSigningAlgorithms": [ "ES384" ],
           "TokenSigningAlgorithms": [ "ES384" ],
-          "Issuer": "https://localhost:7016/fhir/r4",
-          "Subject": "https://localhost:7016/fhir/r4",
-          "AuthorizationEndPoint": "https://localhost:5002/connect/authorize",
-          "TokenEndpoint": "https://localhost:5002/connect/token",
-          "RegistrationEndpoint": "https://localhost:5002/connect/register"
+          "Issuer": "https://host.docker.internal:7016/fhir/r4",
+          "Subject": "https://host.docker.internal:7016/fhir/r4",
+          "AuthorizationEndPoint": "https://host.docker.internal:5002/connect/authorize",
+          "TokenEndpoint": "https://host.docker.internal:5002/connect/token",
+          "RegistrationEndpoint": "https://host.docker.internal:5002/connect/register"
         }
       },
       {
         "Community": "udap://Community3",
         "SignedMetadataConfig": {
-          "AuthorizationEndPoint": "https://localhost:5002/connect/authorize",
-          "TokenEndpoint": "https://localhost:5002/connect/token",
-          "RegistrationEndpoint": "https://localhost:5002/connect/register"
+          "AuthorizationEndPoint": "https://host.docker.internal:5002/connect/authorize",
+          "TokenEndpoint": "https://host.docker.internal:5002/connect/token",
+          "RegistrationEndpoint": "https://host.docker.internal:5002/connect/register"
         }
       }
     ]
@@ -242,17 +269,17 @@ load certificates from a secure location such as an HSM.
 
 #### :boom: Run udap.fhirserver.devdays Project
 
-- [https://localhost:7017/fhir/r4?_format=json](https://localhost:7017/fhir/r4?_format=json)
-- [https://localhost:7017/fhir/r4/Patient](https://localhost:7017/fhir/r4/Patient)  (Need a token)
+- [https://host.docker.internal:7017/fhir/r4?_format=json](https://host.docker.internal:7017/fhir/r4?_format=json)
+- [https://host.docker.internal:7017/fhir/r4/Patient](https://host.docker.internal:7017/fhir/r4/Patient)  (Need a token)
 
 Default UDAP metadata endpoint.
 
-- [https://localhost:7017/fhir/r4/.well-known/udap](https://localhost:7017/fhir/r4/.well-known/udap)
+- [https://host.docker.internal:7017/fhir/r4/.well-known/udap](https://host.docker.internal:7017/fhir/r4/.well-known/udap)
 
 Convenience links to find community specific UDAP metadata endpoints
 
-- [https://localhost:7017/fhir/r4/.well-known/udap/communities](https://localhost:7017/fhir/r4/.well-known/udap/communities)
-- [https://localhost:7017/fhir/r4/.well-known/udap/communities/ashtml](https://localhost:7017/fhir/r4/.well-known/udap/communities/ashtml)
+- [https://host.docker.internal:7017/fhir/r4/.well-known/udap/communities](https://host.docker.internal:7017/fhir/r4/.well-known/udap/communities)
+- [https://host.docker.internal:7017/fhir/r4/.well-known/udap/communities/ashtml](https://host.docker.internal:7017/fhir/r4/.well-known/udap/communities/ashtml)
 
 
 ### configure udap.authserver.devdays
@@ -285,7 +312,7 @@ dotnet add package Udap.UI
             b.UseSqlite(connectionString,
                 dbOpts =>
                     dbOpts.MigrationsAssembly(typeof(Program).Assembly.FullName)),
-    baseUrl: "https://localhost:5102"
+    baseUrl: "https://host.docker.internal:5102"
     )
     .AddUdapResponseGenerators()
     .AddSmartV2Expander();
@@ -334,7 +361,7 @@ Example UdapClientOptions:
       "USER_KEY": "hobojoe",
       "ORG_KEY": "travelOrg"
     },
-    "TieredOAuthClientLogo": "https://localhost:5102/_content/Udap.UI/udapAuthLogo.jpg"
+    "TieredOAuthClientLogo": "https://host.docker.internal:5102/_content/Udap.UI/udapAuthLogo.jpg"
   }
 ```
 
@@ -490,9 +517,9 @@ And finally this pipeline configuration will look similar to the AuthServer with
       {
         "Community": "udap://Community1",
         "SignedMetadataConfig": {
-          "AuthorizationEndPoint": "https://localhost:5002/connect/authorize",
-          "TokenEndpoint": "https://localhost:5002/connect/token",
-          "RegistrationEndpoint": "https://localhost:5002/connect/register"
+          "AuthorizationEndPoint": "https://host.docker.internal:5002/connect/authorize",
+          "TokenEndpoint": "https://host.docker.internal:5002/connect/token",
+          "RegistrationEndpoint": "https://host.docker.internal:5002/connect/register"
         }
       }
     ]
@@ -524,7 +551,7 @@ load certificates from a secure location such as an HSM.
 
 ### Client Validation Demo
 
-Validate the https://localhost:7017/fhir/r4/.well-known/udap signed metadata with [UdapEd UI Client](https://localhost:7041).  Upload the [Community1 anchor](./udap.pki.devdays/CertificateStore/Community1/DevDaysCA_1.crt) as the clients known trust anchor.
+Validate the https://host.docker.internal:7017/fhir/r4/.well-known/udap signed metadata with [UdapEd UI Client](https://host.docker.internal:7041).  Upload the [Community1 anchor](./udap.pki.devdays/CertificateStore/Community1/DevDaysCA_1.crt) as the clients known trust anchor.
 
 ---
 
@@ -535,7 +562,7 @@ Notice in the image below.
 
 This error will be present in almost every case when a X509 Chain cannot be built and verified.  Always look at the other errors first.  For example, if an intermediate certificate cannot be resolved nor found in a trusted store, such as the Windows Certificate store or a Linux trust store then the ```RevocationStatusUnknown``` will pre presented by the ```Udap.Client``` during validation.  The ```Untrusted``` error should clue us into checking the ```Trust Anchor``` and ```Intermediate Certificate``` if one exists.  ```Intermediate Certificates``` can be resolved via the ```AIA (Authority Information Access)``` extension.  Look at the ```UdapEd``` tool to see where that extension points too.  Remember that ```Trust Anchor``` chosen for the ```Udap.Client``` is loaded into it' trusted root store.  It is the top of the store and the whole chain from ```Trust Anchor``` to the ```Client Certificate``` used to sign the metadata must be build and validated including ```CRL (Certificate Revocation List)``` checks.  This can be tricky especially in development while regenerating PKI structures and running tests.  Windows and Linux will cache the CRL requests and sometimes load intermediates into trust stores.  The ```UdapEd``` tool may evolve more to try and find these tricky strategies based on operating systems and visualize what is happening.
 
-An actual revoked certificate will be reported like the following.  This can be tested by setting the **BaseUrl** to ```https://localhost:7016/fhir/r4``` and the **Community** to ```udap://Community3```.  **And** don't forget to choose the ```udap://Community3``` community anchor, otherwise you will not be able to build the chain.  Without a built chain the CRL endpoint cannot be checked because we do not trust the ```X509 Chain```. 
+An actual revoked certificate will be reported like the following.  This can be tested by setting the **BaseUrl** to ```https://host.docker.internal:7016/fhir/r4``` and the **Community** to ```udap://Community3```.  **And** don't forget to choose the ```udap://Community3``` community anchor, otherwise you will not be able to build the chain.  Without a built chain the CRL endpoint cannot be checked because we do not trust the ```X509 Chain```. 
 
 - :exclamation: <span style="color:red">(Revoked) The certificate is revoked.</span>
 

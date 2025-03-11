@@ -16,10 +16,9 @@ builder.AddContainer("UdapEd-Tutorial", "ghcr.io/joeshook/udaped", "v0.4.4.30")
     .WithHttpsEndpoint(port: 7041, targetPort: 8181)
     .WithEnvironment("ASPNETCORE_HTTPS_PORTS", "8181")
     .WithEnvironment("ASPNETCORE_Kestrel__Certificates__Default__Password", "password")
-    .WithEnvironment("ASPNETCORE_Kestrel__Certificates__Default__Path", "/home/app/.aspnet/https/aspnetDevCert.pfx")   
+    .WithEnvironment("ASPNETCORE_Kestrel__Certificates__Default__Path", "/home/app/.aspnet/https/udap-tutorial-dev-tls-cert.pfx")
     .WithEnvironment("sampleKeyC", emrDirectClientPasscode)
-    .WithBindMount($"{userProfile}/.aspnet/https", "/home/app/.aspnet/https", true)
-    .WithBindMount("../CertificateStore", "/app/CertificateStore", true);
+    .WithBindMount("../CertificateStore", "/home/app/.aspnet/https", true);
     
 
 builder.Build().Run();

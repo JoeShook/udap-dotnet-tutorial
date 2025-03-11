@@ -49,9 +49,9 @@ This command will start all the projects defined in the Aspire configuration.
 
    Once the projects are up and running, you can access the various services using the following URLs:
 
-   - **FHIR Server**: [https://localhost:7017/fhir/r4](https://localhost:7017/fhir/r4)
-   - **UDAP Auth Server**: [https://localhost:5102](https://localhost:5102)
-   - **UDAP IDP Server**: [https://localhost:5202](https://localhost:5202)
+   - **FHIR Server**: [https://host.docker.internal:7017/fhir/r4](https://host.docker.internal:7017/fhir/r4)
+   - **UDAP Auth Server**: [https://host.docker.internal:5102](https://host.docker.internal:5102)
+   - **UDAP IDP Server**: [https://host.docker.internal:5202](https://host.docker.internal:5202)
 
 ## Additional Notes
 

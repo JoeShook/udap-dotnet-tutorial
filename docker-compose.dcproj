@@ -6,7 +6,7 @@
     <DockerPublishLocally>False</DockerPublishLocally>
     <ProjectGuid>1aecd728-464a-4767-9278-9975b3226828</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://host.docker.internal:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>udap.authserver.devdays</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

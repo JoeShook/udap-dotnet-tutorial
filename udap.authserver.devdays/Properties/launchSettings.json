@@ -4,10 +4,12 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_Kestrel__Certificates__Default__Password": "password",
+        "ASPNETCORE_Kestrel__Certificates__Default__Path": "../CertificateStore/udap-tutorial-dev-tls-cert.pfx"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:5102"
+      "applicationUrl": "https://*:5102"
     },
     "Docker": {
       "commandName": "Docker",
@@ -15,7 +17,7 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "8081",
-        "UdapIdpBaseUrl": "https://localhost:5102"
+        "UdapIdpBaseUrl": "https://host.docker.internal:5102"
       },
       "publishAllPorts": true,
       "useSSL": true
