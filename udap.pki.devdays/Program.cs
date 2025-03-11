@@ -53,7 +53,10 @@ IssueUdapClientCertificate(
         $"{BaseDir()}/../udap.fhirserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx"
     },
     $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt",
-    $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl"
+    new List<string> { 
+        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl",
+        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_1.crl"
+    }
 );
 
 
@@ -75,7 +78,10 @@ IssueUdapClientCertificate(
         $"{BaseDir()}/../udap.authserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx"
     },
     $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt",
-    $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl"
+    new List<string> {
+        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl",
+        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_1.crl"
+    }
 );
 
 
@@ -104,7 +110,10 @@ IssueUdapClientCertificateECDSA(
     $"{certificateStore}/{community}/issued/{certName}",                             //client certificate store Path
     $"{BaseDir()}/../udap.fhirserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx",
     $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_2.crt",
-    $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_2.crl"
+    new List<string> { 
+        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_2.crl",
+        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_2.crl"
+    }
 );
 
 
@@ -143,7 +152,10 @@ IssueUdapClientCertificate(
         $"{BaseDir()}/../udap.fhirserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx"
     },
     $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_3.crt",
-    $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_3.crl"
+    new List<string> { 
+        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_3.crl",
+        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_3.crl"
+    }
 );
 
 // Revoke
@@ -157,7 +169,7 @@ RevokeCertificate(subCA, revokeCertificate, $"{certificateStoreFullPath}/Communi
 //
 // tls client and use the DevDaysCA_1.crt as the CA
 //
-GenerateTlsCertificate($"{BaseDir()}/{certificateStore}/tls", $"{BaseDir()}/{certificateStore}/{community}/DevDaysCA_1.pfx");
+GenerateTlsCertificate($"{BaseDir()}/{certificateStore}/tls", $"{BaseDir()}/{certificateStore}/Community1/DevDaysCA_1.pfx");
 
 
 
@@ -251,7 +263,10 @@ void MakeAuthorities(string communityStorePath,
     var intermediateCrlFile = $"{crlStorePath}/{intermediateName}.crl";
     var intermediateCrlFullPath = $"{BaseDir()}/{intermediateCrlFile}";
 
-    var intermediateCdp = $"http://localhost:{staticCertPort}/crl/{anchorName}.crl";
+    var intermediateCdp = new List<string> { 
+        $"http://localhost:{staticCertPort}/crl/{anchorName}.crl",
+        $"http://host.docker.internal:{staticCertPort}/crl/{anchorName}.crl"
+    };
     
     string anchorHostedUrl = $"http://localhost:{staticCertPort}/certs/{anchorName}.crt";
     
@@ -367,7 +382,7 @@ X509Certificate2 IssueUdapClientCertificate(
             string clientCertFilePath,
             List<string> deliveryPaths,  // copy the certificate to a project like Fhir Server or Idp Server
             string intermediateHostedUrl,
-            string? crl,
+            List<string>? crl,
             DateTimeOffset notBefore = default,
             DateTimeOffset notAfter = default)
 {
@@ -470,7 +485,7 @@ X509Certificate2 IssueUdapClientCertificateECDSA(
     string clientCertFilePath,
     string deliveryPath,  // copy the certificate to a project like Fhir Server or Idp Server
     string intermediateHostedUrl,
-    string? crl,
+    List<string>? crl,
     DateTimeOffset notBefore = default,
     DateTimeOffset notAfter = default)
 {
@@ -678,40 +693,30 @@ static void AddAuthorityKeyIdentifier(X509Certificate2 caCert, CertificateReques
     intermediateReq.CertificateExtensions.Add(new X509Extension("2.5.29.35", authorityKeyIdentifier, false));
 }
 
-static X509Extension MakeCdp(string url)
+static X509Extension MakeCdp(List<string> urls)
 {
-    //
-    // urls less than 119 char solution.
-    // From Bartonjs of course.
-    //
-    // https://stackoverflow.com/questions/60742814/add-crl-distribution-points-cdp-extension-to-x509certificate2-certificate
-    //
-    // From Crypt32:  .NET doesn't support CDP extension. You have to use 3rd party libraries for that. BC is ok if it works for you.
-    // Otherwise write you own. :)
-    //
+    if (urls == null || urls.Count == 0)
+        throw new ArgumentException("At least one URL must be provided.", nameof(urls));
 
-    byte[] encodedUrl = Encoding.ASCII.GetBytes(url);
-
-    if (encodedUrl.Length > 119)
+    // Build DistributionPoint payload for each URL
+    var distributionPoints = new Asn1EncodableVector();
+    foreach (var url in urls)
     {
-        throw new NotSupportedException();
+        if (string.IsNullOrWhiteSpace(url))
+            throw new ArgumentException("URLs cannot be null or empty.", nameof(urls));
+
+        var generalName = new GeneralName(GeneralName.UniformResourceIdentifier, url);
+        var generalNames = new GeneralNames(generalName);
+        var distributionPointName = new DistributionPointName(DistributionPointName.FullName, generalNames);
+        var distributionPoint = new DistributionPoint(distributionPointName, null, null);
+
+        distributionPoints.Add(distributionPoint);
     }
 
-    byte[] payload = new byte[encodedUrl.Length + 10];
-    int offset = 0;
-    payload[offset++] = 0x30;
-    payload[offset++] = (byte)(encodedUrl.Length + 8);
-    payload[offset++] = 0x30;
-    payload[offset++] = (byte)(encodedUrl.Length + 6);
-    payload[offset++] = 0xA0;
-    payload[offset++] = (byte)(encodedUrl.Length + 4);
-    payload[offset++] = 0xA0;
-    payload[offset++] = (byte)(encodedUrl.Length + 2);
-    payload[offset++] = 0x86;
-    payload[offset++] = (byte)(encodedUrl.Length);
-    Buffer.BlockCopy(encodedUrl, 0, payload, offset, encodedUrl.Length);
+    var sequence = new DerSequence(distributionPoints);
+    var extensionValue = sequence.GetDerEncoded();
 
-    return new X509Extension("2.5.29.31", payload, critical: false);
+    return new X509Extension("2.5.29.31", extensionValue, critical: false);
 }
 
 static CrlNumber GetNextCrlNumber(string fileName)
