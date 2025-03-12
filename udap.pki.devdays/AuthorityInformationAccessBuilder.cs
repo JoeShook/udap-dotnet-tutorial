@@ -16,36 +16,45 @@ namespace udap.pki.devdays
     {
         private List<byte[]> _encodedUrls = new List<byte[]>();
         private readonly List<byte[]> _encodedSequences = new List<byte[]>();
+
+
         /// <summary>
-        /// Adding ObjectIdentifier (OID) 1.3.6.1.5.5.7.48.2
+        /// Adding ObjectIdentifier (OID) 1.3.6.1.5.5.7.48.2 for a list of URIs
         /// </summary>
-        /// <param name="uri"></param>
-        public void AdCertificateAuthorityIssuerUri(Uri uri)
+        /// <param name="uris"></param>
+        public void AddCertificateAuthorityIssuerUris(List<Uri> uris)
         {
-            if (uri == null) 
-                throw new ArgumentNullException(nameof(uri));
-            
+            if (uris == null || uris.Count == 0)
+                throw new ArgumentException("At least one URI must be provided.", nameof(uris));
+
+            foreach (var uri in uris)
+            {
+                if (uri == null)
+                    throw new ArgumentException("URIs cannot be null.", nameof(uris));
+
+                AddUri(uri);
+            }
+        }
+
+        private void AddUri(Uri uri)
+        {
             AsnWriter writer = new AsnWriter(AsnEncodingRules.DER);
-            
+
             writer.WriteObjectIdentifier("1.3.6.1.5.5.7.48.2");
-            _encodedUrls.Add(writer.Encode());
+            var encodedOid = writer.Encode();
 
             writer = new AsnWriter(AsnEncodingRules.DER);
-
             writer.WriteCharacterString(
-                UniversalTagNumber.IA5String, 
-                uri.AbsoluteUri, 
+                UniversalTagNumber.IA5String,
+                uri.AbsoluteUri,
                 new Asn1Tag(TagClass.ContextSpecific, 6));
-
-            _encodedUrls.Add(writer.Encode());
+            var encodedUri = writer.Encode();
 
             writer = new AsnWriter(AsnEncodingRules.DER);
             using (writer.PushSequence())
             {
-                foreach (byte[] encodedName in _encodedUrls)
-                {
-                    writer.WriteEncodedValue(encodedName);
-                }
+                writer.WriteEncodedValue(encodedOid);
+                writer.WriteEncodedValue(encodedUri);
             }
 
             _encodedSequences.Add(writer.Encode());

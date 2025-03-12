@@ -52,7 +52,11 @@ IssueUdapClientCertificate(
     new List<string>(){
         $"{BaseDir()}/../udap.fhirserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx"
     },
-    $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt",
+    new List<string>
+    {
+        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt",
+        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_1.crt"
+    },
     new List<string> { 
         $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl",
         $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_1.crl"
@@ -77,7 +81,11 @@ IssueUdapClientCertificate(
         $"{BaseDir()}/../udap.idp.server.devdays/{certificateStore}/{community}/issued/{certName}.pfx",
         $"{BaseDir()}/../udap.authserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx"
     },
-    $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt",
+    new List<string>
+    {
+        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt",
+        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_1.crt"
+    },
     new List<string> {
         $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl",
         $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_1.crl"
@@ -108,8 +116,12 @@ IssueUdapClientCertificateECDSA(
         "http://localhost/fhir/r4"
     ],                                                                                  //SubjAltNames (Demonstrate multiple)
     $"{certificateStore}/{community}/issued/{certName}",                             //client certificate store Path
-    $"{BaseDir()}/../udap.fhirserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx",
-    $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_2.crt",
+    $"{BaseDir()}/../udap.fhirserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx",    
+    new List<string>
+    {
+        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_2.crt",
+        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_2.crt"
+    },
     new List<string> { 
         $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_2.crl",
         $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_2.crl"
@@ -150,8 +162,12 @@ IssueUdapClientCertificate(
     new List<string>()
     {
         $"{BaseDir()}/../udap.fhirserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx"
+    },    
+    new List<string>
+    {
+        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_3.crt",
+        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_3.crt"
     },
-    $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_3.crt",
     new List<string> { 
         $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_3.crl",
         $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_3.crl"
@@ -268,12 +284,14 @@ void MakeAuthorities(string communityStorePath,
         $"http://host.docker.internal:{staticCertPort}/crl/{anchorName}.crl"
     };
     
-    string anchorHostedUrl = $"http://localhost:{staticCertPort}/certs/{anchorName}.crt";
+    var anchorHostedUrl = new List<Uri> {
+        new Uri ($"http://localhost:{staticCertPort}/certs/{anchorName}.crt"),
+        new Uri ($"http://host.docker.internal:{staticCertPort}/certs/{anchorName}.crt")
+    };
     
     var intermediateStorePath = $"{communityStorePath}/intermediates";
     var intermediateStoreFullPath = $"{BaseDir()}/{intermediateStorePath}";
-    var issuedStorePath = $"{communityStorePath}/issued";
-
+    
     using (RSA parentRSAKey = RSA.Create(4096))
     using (RSA intermediateRSAKey = RSA.Create(4096))
     {
@@ -343,7 +361,7 @@ void MakeAuthorities(string communityStorePath,
                 MakeCdp(intermediateCdp));
 
             var authorityInfoAccessBuilder = new AuthorityInformationAccessBuilder();
-            authorityInfoAccessBuilder.AdCertificateAuthorityIssuerUri(new Uri(anchorHostedUrl));
+            authorityInfoAccessBuilder.AddCertificateAuthorityIssuerUris(anchorHostedUrl);
             var aiaExtension = authorityInfoAccessBuilder.Build();
             intermediateReq.CertificateExtensions.Add(aiaExtension);
 
@@ -381,7 +399,7 @@ X509Certificate2 IssueUdapClientCertificate(
             List<string> subjectAltNames,
             string clientCertFilePath,
             List<string> deliveryPaths,  // copy the certificate to a project like Fhir Server or Idp Server
-            string intermediateHostedUrl,
+            List<string> intermediateHostedUrl,
             List<string>? crl,
             DateTimeOffset notBefore = default,
             DateTimeOffset notAfter = default)
@@ -439,7 +457,7 @@ X509Certificate2 IssueUdapClientCertificate(
     clientCertRequest.CertificateExtensions.Add(x509Extension);
 
     var authorityInfoAccessBuilder = new AuthorityInformationAccessBuilder();
-    authorityInfoAccessBuilder.AdCertificateAuthorityIssuerUri(new Uri(intermediateHostedUrl));
+    authorityInfoAccessBuilder.AddCertificateAuthorityIssuerUris(intermediateHostedUrl.Select(u => new Uri(u)).ToList());
     var aiaExtension = authorityInfoAccessBuilder.Build();
     clientCertRequest.CertificateExtensions.Add(aiaExtension);
     
@@ -484,7 +502,7 @@ X509Certificate2 IssueUdapClientCertificateECDSA(
     List<string> subjectAltNames,
     string clientCertFilePath,
     string deliveryPath,  // copy the certificate to a project like Fhir Server or Idp Server
-    string intermediateHostedUrl,
+    List<string> intermediateHostedUrl,
     List<string>? crl,
     DateTimeOffset notBefore = default,
     DateTimeOffset notAfter = default)
@@ -542,7 +560,7 @@ X509Certificate2 IssueUdapClientCertificateECDSA(
 
    
         var authorityInfoAccessBuilder = new AuthorityInformationAccessBuilder();
-        authorityInfoAccessBuilder.AdCertificateAuthorityIssuerUri(new Uri(intermediateHostedUrl));
+        authorityInfoAccessBuilder.AddCertificateAuthorityIssuerUris(intermediateHostedUrl.Select(u => new Uri(u)).ToList());
         var aiaExtension = authorityInfoAccessBuilder.Build();
         clientCertRequest.CertificateExtensions.Add(aiaExtension);
     
