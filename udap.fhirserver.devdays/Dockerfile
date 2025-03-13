@@ -30,4 +30,5 @@ RUN dotnet publish "./udap.fhirserver.devdays.csproj" -c $BUILD_CONFIGURATION -o
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY ["udap.fhirserver.devdays/DemoFileSystemService", "./DemoFileSystemService"]
 ENTRYPOINT ["dotnet", "udap.fhirserver.devdays.dll"]
