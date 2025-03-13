@@ -4,11 +4,9 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 COPY ./CertificateStore/DevDaysCA_1.crt /etc/ssl/certs
 RUN update-ca-certificates
-USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -31,4 +29,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY ["udap.fhirserver.devdays/DemoFileSystemService", "./DemoFileSystemService"]
+RUN chown -R $APP_UID:0 /app/DemoFileSystemService && chmod -R u+w /app/DemoFileSystemService
+USER $APP_UID
 ENTRYPOINT ["dotnet", "udap.fhirserver.devdays.dll"]
