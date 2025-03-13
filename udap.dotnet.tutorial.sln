@@ -14,8 +14,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{6A824E94-D7F3-4783-B589-F3EE087A4EEB}"
 	ProjectSection(SolutionItems) = preProject
 		aspnetDevCert.pfx = aspnetDevCert.pfx
+		docker-compose-github.yml = docker-compose-github.yml
 		docker-compose.md = docker-compose.md
-		docker-compose.yml = docker-compose.yml
 		Dockerfile.UdapEd = Dockerfile.UdapEd
 		dotnetAspire.md = dotnetAspire.md
 		global.json = global.json

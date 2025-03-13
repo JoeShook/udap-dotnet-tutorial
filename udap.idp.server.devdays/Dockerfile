@@ -2,13 +2,12 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+COPY ../CertificateStore/DevDaysCA_1.crt /etc/ssl/certs
+RUN update-ca-certificates
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-
-COPY ./CertificateStore/DevDaysCA_1.crt /etc/ssl/certs
-RUN update-ca-certificates
 
 
 # This stage is used to build the service project

@@ -18,9 +18,6 @@
   <ItemGroup>
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CertificateStore\" />
-  </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="echo $(MSBuildProjectDirectory)" />

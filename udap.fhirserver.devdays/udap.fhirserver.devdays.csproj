@@ -9,6 +9,7 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <DockerfileRunArguments>-p "7017:8081" -p "5017:8080"</DockerfileRunArguments>
     <UserSecretsId>eeec10df-e86a-4abb-b93d-377bd8797a35</UserSecretsId>
+    <DockerfileContext></DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,10 +20,6 @@
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.6.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
     <PackageReference Include="Udap.Metadata.Server" Version="0.4.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CertificateStore\" />
   </ItemGroup>
 
   <ItemGroup>

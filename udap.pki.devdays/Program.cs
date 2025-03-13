@@ -54,12 +54,12 @@ IssueUdapClientCertificate(
     },
     new List<string>
     {
-        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt",
-        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_1.crt"
+        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_1.crt",
+        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt"        
     },
-    new List<string> { 
-        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl",
-        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_1.crl"
+    new List<string> {
+        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_1.crl",
+        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl"        
     }
 );
 
@@ -83,12 +83,12 @@ IssueUdapClientCertificate(
     },
     new List<string>
     {
-        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt",
-        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_1.crt"
+        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_1.crt",
+        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_1.crt"        
     },
     new List<string> {
-        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl",
-        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_1.crl"
+        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_1.crl",
+        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_1.crl"        
     }
 );
 
@@ -119,12 +119,12 @@ IssueUdapClientCertificateECDSA(
     $"{BaseDir()}/../udap.fhirserver.devdays/{certificateStore}/{community}/issued/{certName}.pfx",    
     new List<string>
     {
-        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_2.crt",
-        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_2.crt"
+        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_2.crt",
+        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_2.crt"        
     },
-    new List<string> { 
-        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_2.crl",
-        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_2.crl"
+    new List<string> {
+        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_2.crl",
+        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_2.crl"        
     }
 );
 
@@ -165,12 +165,12 @@ IssueUdapClientCertificate(
     },    
     new List<string>
     {
-        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_3.crt",
-        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_3.crt"
+        $"http://host.docker.internal:{staticCertPort}/certs/DevDaysSubCA_3.crt",
+        $"http://localhost:{staticCertPort}/certs/DevDaysSubCA_3.crt"        
     },
-    new List<string> { 
-        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_3.crl",
-        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_3.crl"
+    new List<string> {
+        $"http://host.docker.internal:{staticCertPort}/crl/DevDaysSubCA_3.crl",
+        $"http://localhost:{staticCertPort}/crl/DevDaysSubCA_3.crl"        
     }
 );
 
@@ -248,6 +248,9 @@ File.Copy(
     true);
 
 
+//
+// Tls distribution
+//
 
 File.Copy(
     $"{baseDir}/{certificateStore}/Community1/DevDaysCA_1.crt",
@@ -264,6 +267,35 @@ File.Copy(
     $"{baseDir}/../CertificateStore/udap-tutorial-dev-tls-cert.cer",
     true);
 
+File.Copy(
+    $"{baseDir}/{certificateStore}/tls/udap-tutorial-dev-tls-cert.cer",
+    $"{baseDir}/../udap.fhirserver.devdays/{certificateStore}/tls/udap-tutorial-dev-tls-cert.cer",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/tls/udap-tutorial-dev-tls-cert.pfx",
+    $"{baseDir}/../udap.fhirserver.devdays/{certificateStore}/tls/udap-tutorial-dev-tls-cert.pfx",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/tls/udap-tutorial-dev-tls-cert.cer",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/tls/udap-tutorial-dev-tls-cert.cer",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/tls/udap-tutorial-dev-tls-cert.pfx",
+    $"{baseDir}/../udap.authserver.devdays/{certificateStore}/tls/udap-tutorial-dev-tls-cert.pfx",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/tls/udap-tutorial-dev-tls-cert.cer",
+    $"{baseDir}/../udap.idp.server.devdays/{certificateStore}/tls/udap-tutorial-dev-tls-cert.cer",
+    true);
+
+File.Copy(
+    $"{baseDir}/{certificateStore}/tls/udap-tutorial-dev-tls-cert.pfx",
+    $"{baseDir}/../udap.idp.server.devdays/{certificateStore}/tls/udap-tutorial-dev-tls-cert.pfx",
+    true);
 
 
 void MakeAuthorities(string communityStorePath,
@@ -279,14 +311,14 @@ void MakeAuthorities(string communityStorePath,
     var intermediateCrlFile = $"{crlStorePath}/{intermediateName}.crl";
     var intermediateCrlFullPath = $"{BaseDir()}/{intermediateCrlFile}";
 
-    var intermediateCdp = new List<string> { 
-        $"http://localhost:{staticCertPort}/crl/{anchorName}.crl",
-        $"http://host.docker.internal:{staticCertPort}/crl/{anchorName}.crl"
+    var intermediateCdp = new List<string> {
+        $"http://host.docker.internal:{staticCertPort}/crl/{anchorName}.crl",
+        $"http://localhost:{staticCertPort}/crl/{anchorName}.crl"        
     };
     
     var anchorHostedUrl = new List<Uri> {
-        new Uri ($"http://localhost:{staticCertPort}/certs/{anchorName}.crt"),
-        new Uri ($"http://host.docker.internal:{staticCertPort}/certs/{anchorName}.crt")
+        new Uri ($"http://host.docker.internal:{staticCertPort}/certs/{anchorName}.crt"),
+        new Uri ($"http://localhost:{staticCertPort}/certs/{anchorName}.crt")        
     };
     
     var intermediateStorePath = $"{communityStorePath}/intermediates";

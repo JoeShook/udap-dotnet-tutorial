@@ -10,7 +10,8 @@
     <DockerServiceName>udap.authserver.devdays</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="docker-compose.local.yml" />
     <None Include=".dockerignore" />
+    <None Include=".env" />
+    <None Include="docker-compose.yml" />
   </ItemGroup>
 </Project>

@@ -1,47 +1,58 @@
 services:
   udap.authserver.devdays:
-    image: ghcr.io/joeshook/udapauthserverdevdays:latest
+    image: ${DOCKER_REGISTRY-}udapauthserverdevdays
+    build:
+      context: .
+      dockerfile: udap.authserver.devdays/Dockerfile
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTPS_PORTS=8081
       - UdapIdpBaseUrl=https://host.docker.internal:5102
       - ASPNETCORE_Kestrel__Certificates__Default__Password=udap-test
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/udap-tutorial-dev-tls-cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/CertificateStore/tls/udap-tutorial-dev-tls-cert.pfx
     ports:
       - "5102:8081"
-    volumes:
-      - ./CertificateStore:/home/app/.aspnet/https:ro
 
   udap.certificates.server.devdays:
-    image: ghcr.io/joeshook/udapcertificatesserverdevdays:latest
+    image: ${DOCKER_REGISTRY-}udapcertificatesserverdevdays
+    build:
+      context: .
+      dockerfile: udap.certificates.server.devdays/Dockerfile
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
     ports:
       - "5034:8080"
 
   udap.fhirserver.devdays:
-    image: ghcr.io/joeshook/udapfhirserverdevdays:latest
+    image: ${DOCKER_REGISTRY-}udapfhirserverdevdays
+    build:
+      context: .
+      dockerfile: udap.fhirserver.devdays/Dockerfile
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ASPNETCORE_Kestrel__Certificates__Default__Password=udap-test
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/udap-tutorial-dev-tls-cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/CertificateStore/tls/udap-tutorial-dev-tls-cert.pfx
     ports:
       - "5017:8080"
       - "7017:8081"
-    volumes:
-      - ./CertificateStore:/home/app/.aspnet/https:ro
 
   udap.idp.server.devdays:
-    image: ghcr.io/joeshook/udapidpserverdevdays:latest    
+    image: ${DOCKER_REGISTRY-}udapidpserverdevdays
+    build:
+      context: .
+      dockerfile: udap.idp.server.devdays/Dockerfile
     environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - UdapIdpBaseUrl=https://host.docker.internal:5202
       - ASPNETCORE_Kestrel__Certificates__Default__Password=udap-test
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/udap-tutorial-dev-tls-cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/CertificateStore/tls/udap-tutorial-dev-tls-cert.pfx
     ports:
-      - "5202:8081"
-    volumes:
-      - ./CertificateStore:/home/app/.aspnet/https:ro
+      - "5202:8081"    
 
   udaped:
     image: ${DOCKER_REGISTRY-}udaped-tutorial
@@ -57,5 +68,3 @@ services:
     volumes:
       - ./CertificateStore:/home/app/.aspnet/https:ro
       - ./CertificateStore:/app/CertificateStore:ro
-
-    

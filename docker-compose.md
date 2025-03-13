@@ -43,7 +43,12 @@ services:
    From the root of the repository, run the following command:
    ```docker-compose up```
 
-3. **Access the Services**
+3. **Or pull existing images from Github and avoid compiling the code**   
+    
+   From the root of the repository, run the following command:
+   ```docker-compose -f docker-compose-github.yml up```
+
+4. **Access the Services**
 
    Once the containers are up and running, you can access the various services using the following URLs:
 
