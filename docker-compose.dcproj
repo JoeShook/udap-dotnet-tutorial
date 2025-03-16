@@ -13,5 +13,6 @@
     <None Include=".dockerignore" />
     <None Include=".env" />
     <None Include="docker-compose.yml" />
+    <None Include="Packages\udap_urls.json" />
   </ItemGroup>
 </Project>
