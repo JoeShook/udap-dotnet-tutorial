@@ -68,3 +68,5 @@ services:
     volumes:
       - ./CertificateStore:/home/app/.aspnet/https:ro
       - ./CertificateStore:/app/CertificateStore:ro
+      - ./Packages:/app/wwwroot/Packages:ro
+      - ./Packages:/app/wwwroot/_content/UdapEd.Shared/Packages:ro
