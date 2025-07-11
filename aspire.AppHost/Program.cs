@@ -13,7 +13,8 @@ builder.AddProject<Projects.udap_authserver_devdays>("udap-authserver-devdays")
     });
 
 builder.AddProject<Projects.udap_certificates_server_devdays>("udap-certificates-server-devdays")
-    
+    .WithUrlForEndpoint("http",
+        url => url.DisplayLocation = UrlDisplayLocation.DetailsOnly)
     .WithUrlForEndpoint("http", ep => new()
     {
         Url = "http://host.docker.internal:5034/",
