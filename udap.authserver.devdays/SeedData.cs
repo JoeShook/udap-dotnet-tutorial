@@ -63,9 +63,8 @@ public static class SeedData
         var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         var communities = new List<Tuple<string, X509Certificate2>>();
         var certificateStorePath = "CertificateStore";
-        var certificateStoreFullPath = Path.Combine(assemblyPath!, certificateStorePath);
-
-        foreach (var folder in Directory.GetDirectories(certificateStoreFullPath))
+     
+        foreach (var folder in Directory.GetDirectories(certificateStorePath).Where(p => p.StartsWith("Community")))
         {
             var folderName = new DirectoryInfo(folder).Name;
             var anchorFile = Directory.GetFiles(folder, "*.crt").First();

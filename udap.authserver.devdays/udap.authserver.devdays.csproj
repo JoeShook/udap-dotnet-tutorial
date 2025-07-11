@@ -77,6 +77,9 @@
     <None Update="CertificateStore\Community3\issued\DevDaysRevokedClient.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="CertificateStore\tls\udap-tutorial-dev-tls-cert.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -31,6 +31,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspire.AppHost", "aspire.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspire.ServiceDefaults", "aspire.ServiceDefaults\aspire.ServiceDefaults.csproj", "{90640AB5-B40F-EB9A-9160-59682C5D022E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CertificateStore", "CertificateStore", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		CertificateStore\.gitkeep = CertificateStore\.gitkeep
+		CertificateStore\DevDaysCA_1.crt = CertificateStore\DevDaysCA_1.crt
+		CertificateStore\udap-tutorial-dev-tls-cert.cer = CertificateStore\udap-tutorial-dev-tls-cert.cer
+		CertificateStore\udap-tutorial-dev-tls-cert.pfx = CertificateStore\udap-tutorial-dev-tls-cert.pfx
+		CertificateStore\udap.emrdirect.client.certificate.p12 = CertificateStore\udap.emrdirect.client.certificate.p12
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
