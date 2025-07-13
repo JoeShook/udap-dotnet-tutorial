@@ -8,7 +8,7 @@ builder.AddProject<Projects.udap_authserver_devdays>("udap-authserver-devdays")
     .WithUrlForEndpoint("https", ep => new()
     {
         Url = "https://host.docker.internal:5102/",
-        DisplayText = "FHIR Server",
+        DisplayText = "Data Holder Auth Server",
         DisplayLocation = UrlDisplayLocation.SummaryAndDetails
     });
 
