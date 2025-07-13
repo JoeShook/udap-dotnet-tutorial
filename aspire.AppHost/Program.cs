@@ -55,7 +55,7 @@ builder.AddProject<Projects.udap_idp_server_devdays>("udap-idp-server-devdays")
     .WithUrlForEndpoint("https", ep => new()
     {
         Url = "https://host.docker.internal:5202/",
-        DisplayText = "FHIR Server",
+        DisplayText = "Identity Server (Tiered OAuth)",
         DisplayLocation = UrlDisplayLocation.SummaryAndDetails
     });
 
