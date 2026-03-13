@@ -79,10 +79,9 @@ await SeedData.InitializeDatabase(app, "CertificateStore", Log.Logger);
 
 // uncomment if you want to add a UI
 app.UseStaticFiles();
-app.UseRouting();
-
 app.UseUdapMetadataServer();
-app.UseUdapIdPServer();
+app.UseRouting();
+app.UseUdapServer();
 app.UseIdentityServer();
 
 

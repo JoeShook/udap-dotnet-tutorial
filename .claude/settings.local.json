@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet package:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet:*)",
+      "Bash(powershell:*)",
+      "Bash(ilspycmd:*)"
+    ]
+  }
+}

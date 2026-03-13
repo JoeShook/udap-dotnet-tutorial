@@ -151,7 +151,7 @@ The order of the middleware is demonstrated in the following code.
 
 #### :boom: Add Udap.Metadata to pipeline
 
-Place it just before the MapControllers() extension method.
+Place it just after UsePathBase and before UseRouting().
 
 ```csharp
   app.UseUdapMetadataServer();
@@ -161,13 +161,13 @@ The pipeline configuration should look like the following when complete.
 
 ```csharp
   app.UsePathBase(new PathString("/fhir/r4"));
+  app.UseUdapMetadataServer();
   app.UseRouting();
 
   app.UseAuthentication();
   app.UseAuthorization();
-  
+
   app.UseHttpsRedirection();
-  app.UseUdapMetadataServer();
   app.MapControllers().RequireAuthorization();
 ```
 
@@ -201,8 +201,6 @@ The pipeline configuration should look like the following when complete.
         "SignedMetadataConfig": {
           "RegistrationSigningAlgorithms": [ "ES384" ],
           "TokenSigningAlgorithms": [ "ES384" ],
-          "Issuer": "https://host.docker.internal:7016/fhir/r4",
-          "Subject": "https://host.docker.internal:7016/fhir/r4",
           "AuthorizationEndPoint": "https://host.docker.internal:5002/connect/authorize",
           "TokenEndpoint": "https://host.docker.internal:5002/connect/token",
           "RegistrationEndpoint": "https://host.docker.internal:5002/connect/register"
@@ -485,9 +483,8 @@ And finally this pipeline configuration will look similar to the AuthServer with
 
   // uncomment if you want to add a UI
   app.UseStaticFiles();
-  app.UseRouting();
-
   app.UseUdapMetadataServer();
+  app.UseRouting();
   app.UseUdapIdPServer();
   app.UseIdentityServer();
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Udap.Server.DbContexts;
+using Udap.Server.Storage.DbContexts;
 
 #nullable disable
 
@@ -423,7 +423,7 @@ namespace IdentityServer.Migrations.UdapDb
                     b.ToTable("DataProtectionKeys");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Anchor", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Anchor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -460,7 +460,7 @@ namespace IdentityServer.Migrations.UdapDb
                     b.ToTable("UdapAnchors", (string)null);
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.AnchorCertification", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.AnchorCertification", b =>
                 {
                     b.Property<int>("AnchorId")
                         .HasColumnType("INTEGER");
@@ -475,7 +475,7 @@ namespace IdentityServer.Migrations.UdapDb
                     b.ToTable("UdapAnchorCertification", (string)null);
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Certification", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Certification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -496,7 +496,7 @@ namespace IdentityServer.Migrations.UdapDb
                     b.ToTable("UdapCertifications", (string)null);
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Community", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Community", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -518,7 +518,7 @@ namespace IdentityServer.Migrations.UdapDb
                     b.ToTable("UdapCommunities", (string)null);
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.CommunityCertification", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.CommunityCertification", b =>
                 {
                     b.Property<int>("CommunityId")
                         .HasColumnType("INTEGER");
@@ -533,7 +533,7 @@ namespace IdentityServer.Migrations.UdapDb
                     b.ToTable("UdapCommunityCertification", (string)null);
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Intermediate", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Intermediate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -570,7 +570,7 @@ namespace IdentityServer.Migrations.UdapDb
                     b.ToTable("UdapIntermediateCertificates", (string)null);
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.TieredClient", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.TieredClient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -710,9 +710,9 @@ namespace IdentityServer.Migrations.UdapDb
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Anchor", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Anchor", b =>
                 {
-                    b.HasOne("Udap.Server.Entities.Community", "Community")
+                    b.HasOne("Udap.Server.Storage.Entities.Community", "Community")
                         .WithMany("Anchors")
                         .HasForeignKey("CommunityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -722,15 +722,15 @@ namespace IdentityServer.Migrations.UdapDb
                     b.Navigation("Community");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.AnchorCertification", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.AnchorCertification", b =>
                 {
-                    b.HasOne("Udap.Server.Entities.Anchor", "Anchor")
+                    b.HasOne("Udap.Server.Storage.Entities.Anchor", "Anchor")
                         .WithMany("AnchorCertifications")
                         .HasForeignKey("AnchorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_AnchorCertification_Anchor");
 
-                    b.HasOne("Udap.Server.Entities.Certification", "Certification")
+                    b.HasOne("Udap.Server.Storage.Entities.Certification", "Certification")
                         .WithMany("AnchorCertifications")
                         .HasForeignKey("CertificationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -741,22 +741,22 @@ namespace IdentityServer.Migrations.UdapDb
                     b.Navigation("Certification");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Certification", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Certification", b =>
                 {
-                    b.HasOne("Udap.Server.Entities.Community", null)
+                    b.HasOne("Udap.Server.Storage.Entities.Community", null)
                         .WithMany("Certifications")
                         .HasForeignKey("CommunityId");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.CommunityCertification", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.CommunityCertification", b =>
                 {
-                    b.HasOne("Udap.Server.Entities.Certification", "Certification")
+                    b.HasOne("Udap.Server.Storage.Entities.Certification", "Certification")
                         .WithMany("CommunityCertifications")
                         .HasForeignKey("CertificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK_CommunityCertification_Certification");
 
-                    b.HasOne("Udap.Server.Entities.Community", "Community")
+                    b.HasOne("Udap.Server.Storage.Entities.Community", "Community")
                         .WithMany("CommunityCertifications")
                         .HasForeignKey("CommunityId")
                         .HasConstraintName("FK_CommunityCertification_Community");
@@ -766,9 +766,9 @@ namespace IdentityServer.Migrations.UdapDb
                     b.Navigation("Community");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Intermediate", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Intermediate", b =>
                 {
-                    b.HasOne("Udap.Server.Entities.Anchor", "Anchor")
+                    b.HasOne("Udap.Server.Storage.Entities.Anchor", "Anchor")
                         .WithMany("Intermediates")
                         .HasForeignKey("AnchorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -798,21 +798,21 @@ namespace IdentityServer.Migrations.UdapDb
                     b.Navigation("RedirectUris");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Anchor", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Anchor", b =>
                 {
                     b.Navigation("AnchorCertifications");
 
                     b.Navigation("Intermediates");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Certification", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Certification", b =>
                 {
                     b.Navigation("AnchorCertifications");
 
                     b.Navigation("CommunityCertifications");
                 });
 
-            modelBuilder.Entity("Udap.Server.Entities.Community", b =>
+            modelBuilder.Entity("Udap.Server.Storage.Entities.Community", b =>
                 {
                     b.Navigation("Anchors");
 

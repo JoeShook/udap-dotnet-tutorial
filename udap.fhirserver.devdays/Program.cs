@@ -77,13 +77,13 @@ app.MapDefaultEndpoints();
 // Configure the HTTP request pipeline.
 
 app.UsePathBase(new PathString("/fhir/r4"));
+app.UseUdapMetadataServer();
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
-app.UseUdapMetadataServer();
 app.MapControllers().RequireAuthorization();
 
 app.Run();
