@@ -44,6 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.1.1" />
     <None Update="CertificateStore\Community1\DevDaysCA_1.crt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
