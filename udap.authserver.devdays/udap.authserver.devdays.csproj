@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -35,8 +35,8 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.15.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.15.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
-    <PackageReference Include="Udap.Server" Version="0.5.22" />
-    <PackageReference Include="Udap.UI" Version="0.5.22" />
+    <PackageReference Include="Udap.Server" Version="0.6.6" />
+    <PackageReference Include="Udap.UI" Version="0.6.6" />
   </ItemGroup>
 
   <ItemGroup>
