@@ -5,7 +5,7 @@ To run the UDAP Dotnet Tutorial project using .NET Aspire, follow these steps:
 ## Prerequisites
 
 Ensure you have the following installed on your machine:
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [Aspire CLI](https://github.com/dotnet/aspire)
 
 

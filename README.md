@@ -10,8 +10,8 @@ The HL7 "[Security IG](http://hl7.org/fhir/us/udap-security/)" is a constraint o
 - FHIR® is the registered trademark of HL7 and is used with the permission of HL7. Use of the FHIR trademark does not constitute endorsement of the contents of this repository by HL7.
 - UDAP® and the UDAP gear logo, ecosystem gears, and green lock designs are trademarks of UDAP.org. UDAP Draft Specifications are referenced and displayed in parts of this source code to document specification implementation.
 
-In 2023 the [udap-devdays-2023](https://github.com/JoeShook/udap-devdays-2023) presentation contained detailed instructions on how to setup Objectives 1 through 3.  That presentation was very detailed concerning setup.
-This years presentation will focus on Objective 4, Tiered OAuth and put less into the setup of the FHIR server and UDAP Auth Server details.  [udap-devdays-2023](https://github.com/JoeShook/udap-devdays-2023) is a good reference.
+The [udap-devdays-2023](https://github.com/JoeShook/udap-devdays-2023) presentation contained detailed instructions on how to setup Objectives 1 through 3.  That presentation was very detailed concerning setup and is a good reference.
+This tutorial covers all four objectives, with a focus on Objective 4 — Tiered OAuth.
 
 ## Objectives
 
@@ -117,7 +117,7 @@ builder.Services.AddUdapMetadataServer(builder.Configuration)
 #### :boom: Add Authentication
 
 ```txt
-dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer -v 8.*
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer -v 10.*
 ```
 
 Register services required by authentication services. Specifically the Bearer schema.

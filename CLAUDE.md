@@ -29,7 +29,7 @@ There are no test projects in this solution.
 
 ## Architecture
 
-Eight projects in the solution, all targeting .NET 8.0:
+Eight projects in the solution, all targeting .NET 10.0:
 
 ### Core Services
 
@@ -67,7 +67,7 @@ Eight projects in the solution, all targeting .NET 8.0:
 ## Key Dependencies
 
 - `Udap.Server`, `Udap.Metadata.Server`, `Udap.UI` — UDAP protocol implementation (from udap-dotnet)
-- `Duende.IdentityServer` 7.2.0 — OAuth/OIDC server framework
+- `Duende.IdentityServer` 7.4.6 — OAuth/OIDC server framework
 - `brianpos.Fhir.R4B.DemoFileSystemFhirServer` — FHIR server implementation
 - `Portable.BouncyCastle` — Certificate generation in PKI project
 - `Serilog` — Structured logging across all services

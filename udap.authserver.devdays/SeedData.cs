@@ -68,7 +68,7 @@ public static class SeedData
         {
             var folderName = new DirectoryInfo(folder).Name;
             var anchorFile = Directory.GetFiles(folder, "*.crt").First();
-            var anchorCertificate = new X509Certificate2(anchorFile);
+            var anchorCertificate = X509CertificateLoader.LoadCertificateFromFile(anchorFile);
             communities.Add(new Tuple<string, X509Certificate2>(folderName, anchorCertificate));
 
             logger.Information($"Creating Anchor from: {anchorFile}");
@@ -166,7 +166,7 @@ public static class SeedData
             .Select(s => s)
             .ToList();
 
-        foreach (var scopeName in seedScopes.Where(s => s.StartsWith("system")))
+        foreach (var scopeName in seedScopes?.Where(s => s.StartsWith("system")) ?? [])
         {
             if (!apiScopes.Any(s =>
                     s.Name == scopeName && s.Properties.Exists(p => p.Key == "udap_prefix" && p.Value == "system")))
@@ -191,7 +191,7 @@ public static class SeedData
             }
         }
 
-        foreach (var scopeName in seedScopes.Where(s => s.StartsWith("user")))
+        foreach (var scopeName in seedScopes?.Where(s => s.StartsWith("user")) ?? [])
         {
             if (!apiScopes.Any(s =>
                     s.Name == scopeName && s.Properties.Exists(p => p.Key == "udap_prefix" && p.Value == "user")))
@@ -216,7 +216,7 @@ public static class SeedData
             }
         }
 
-        foreach (var scopeName in seedScopes.Where(s => s.StartsWith("patient")).ToList())
+        foreach (var scopeName in seedScopes?.Where(s => s.StartsWith("patient")).ToList() ?? [])
         {
             if (!apiScopes.Any(s => s.Name == scopeName && s.Properties.Exists(p => p.Key == "udap_prefix" && p.Value == "patient")))
             {

@@ -33,15 +33,15 @@ MakeAuthorities($"{certificateStore}/{community}",  //communityStorePath
     "DevDaysSubCA_1"                                //intermediateName
 );
 
-var caCert = new X509Certificate2($"{BaseDir()}/{certificateStore}/{community}/DevDaysCA_1.pfx", "udap-test");
-var intermediateCert = new X509Certificate2($"{BaseDir()}/{certificateStore}/{community}/intermediates/DevDaysSubCA_1.pfx", "udap-test");
+var caCert = X509CertificateLoader.LoadPkcs12FromFile($"{BaseDir()}/{certificateStore}/{community}/DevDaysCA_1.pfx", "udap-test");
+var intermediateCert = X509CertificateLoader.LoadPkcs12FromFile($"{BaseDir()}/{certificateStore}/{community}/intermediates/DevDaysSubCA_1.pfx", "udap-test");
 
 
 
 IssueUdapClientCertificate(
-    caCert, 
+    caCert,
     intermediateCert,
-    intermediateCert.GetRSAPrivateKey(),
+    intermediateCert.GetRSAPrivateKey()!,
     $"CN={certName}, OU=DevDays-Community1, O=Fhir Coding, L=Portland, S=Oregon, C=US",   //issuedDistinguishedName
     [
         "https://localhost:7017/fhir/r4",
@@ -69,7 +69,7 @@ certName = "DevDaysIdpClient";
 IssueUdapClientCertificate(
     caCert,
     intermediateCert,
-    intermediateCert.GetRSAPrivateKey(),
+    intermediateCert.GetRSAPrivateKey()!,
     $"CN={certName}, OU=DevDays-Community1, O=Fhir Coding, L=Portland, S=Oregon, C=US",     //issuedDistinguishedName
     [
         "https://localhost:5202/",
@@ -102,13 +102,13 @@ MakeAuthorities($"{certificateStore}/{community}",   //communityStorePath
     "DevDaysSubCA_2"                                //intermediateName
 );
 
-caCert = new X509Certificate2($"{BaseDir()}/{certificateStore}/{community}/DevDaysCA_2.pfx", "udap-test");
-intermediateCert = new X509Certificate2($"{BaseDir()}/{certificateStore}/{community}/intermediates/DevDaysSubCA_2.pfx", "udap-test");
+caCert = X509CertificateLoader.LoadPkcs12FromFile($"{BaseDir()}/{certificateStore}/{community}/DevDaysCA_2.pfx", "udap-test");
+intermediateCert = X509CertificateLoader.LoadPkcs12FromFile($"{BaseDir()}/{certificateStore}/{community}/intermediates/DevDaysSubCA_2.pfx", "udap-test");
 
 IssueUdapClientCertificateECDSA(
     caCert,
     intermediateCert,
-    intermediateCert.GetRSAPrivateKey(),
+    intermediateCert.GetRSAPrivateKey()!,
     $"CN={certName}, OU=DevDays-Community2, O=Fhir Coding, L=Portland, S=Oregon, C=US", //issuedDistinguishedName
     [
         "https://localhost:7017/fhir/r4",
@@ -138,8 +138,8 @@ MakeAuthorities($"{certificateStore}/{community}",   //communityStorePath
     "DevDaysSubCA_3"                                //intermediateName
 );
 
-caCert = new X509Certificate2($"{BaseDir()}/{certificateStore}/{community}/DevDaysCA_3.pfx", "udap-test");
-intermediateCert = new X509Certificate2($"{BaseDir()}/{certificateStore}/{community}/intermediates/DevDaysSubCA_3.pfx", "udap-test");
+caCert = X509CertificateLoader.LoadPkcs12FromFile($"{BaseDir()}/{certificateStore}/{community}/DevDaysCA_3.pfx", "udap-test");
+intermediateCert = X509CertificateLoader.LoadPkcs12FromFile($"{BaseDir()}/{certificateStore}/{community}/intermediates/DevDaysSubCA_3.pfx", "udap-test");
 
 
 // Let's revoke a certificate
@@ -151,7 +151,7 @@ intermediateCert = new X509Certificate2($"{BaseDir()}/{certificateStore}/{commun
 IssueUdapClientCertificate(
     caCert,
     intermediateCert,
-    intermediateCert.GetRSAPrivateKey(),
+    intermediateCert.GetRSAPrivateKey()!,
     $"CN={certName}, OU=DevDays-Community3, O=Fhir Coding, L=Portland, S=Oregon, C=US",  //issuedDistinguishedName
     [
         "https://localhost:7017/fhir/r4",
@@ -176,8 +176,8 @@ IssueUdapClientCertificate(
 
 // Revoke
 
-var subCA = new X509Certificate2($"{certificateStoreFullPath}/Community3/intermediates/DevDaysSubCA_3.pfx", "udap-test", X509KeyStorageFlags.Exportable);
-var revokeCertificate = new X509Certificate2($"{certificateStoreFullPath}/Community3/issued/DevDaysRevokedClient.pfx", "udap-test");
+var subCA = X509CertificateLoader.LoadPkcs12FromFile($"{certificateStoreFullPath}/Community3/intermediates/DevDaysSubCA_3.pfx", "udap-test", X509KeyStorageFlags.Exportable);
+var revokeCertificate = X509CertificateLoader.LoadPkcs12FromFile($"{certificateStoreFullPath}/Community3/issued/DevDaysRevokedClient.pfx", "udap-test");
 
 RevokeCertificate(subCA, revokeCertificate, $"{certificateStoreFullPath}/Community3/crl/DevDaysSubCA_3.crl");
 
@@ -506,8 +506,8 @@ X509Certificate2 IssueUdapClientCertificate(
 
     var certPackage = new X509Certificate2Collection();
     certPackage.Add(clientCertWithKey);
-    certPackage.Add(new X509Certificate2(intermediateCert.Export(X509ContentType.Cert)));
-    certPackage.Add(new X509Certificate2(caCert.Export(X509ContentType.Cert)));
+    certPackage.Add(X509CertificateLoader.LoadCertificate(intermediateCert.Export(X509ContentType.Cert)));
+    certPackage.Add(X509CertificateLoader.LoadCertificate(caCert.Export(X509ContentType.Cert)));
 
     clientCertFullFilePath.EnsureDirectoryExistFromFilePath();
     var clientBytes = certPackage.Export(X509ContentType.Pkcs12, "udap-test");
@@ -610,8 +610,8 @@ X509Certificate2 IssueUdapClientCertificateECDSA(
 
     var certPackage = new X509Certificate2Collection();
     certPackage.Add(clientCertWithKey);
-    certPackage.Add(new X509Certificate2(intermediateCert.Export(X509ContentType.Cert)));
-    certPackage.Add(new X509Certificate2(caCert.Export(X509ContentType.Cert)));
+    certPackage.Add(X509CertificateLoader.LoadCertificate(intermediateCert.Export(X509ContentType.Cert)));
+    certPackage.Add(X509CertificateLoader.LoadCertificate(caCert.Export(X509ContentType.Cert)));
 
     clientCertFullFilePath.EnsureDirectoryExistFromFilePath();
     var clientBytes = certPackage.Export(X509ContentType.Pkcs12, "udap-test");
@@ -803,7 +803,7 @@ static string BaseDir()
 
 static void GenerateTlsCertificate(string tlsStoreFullPath, string caCertificate)
 {
-    using var caCert = new X509Certificate2(caCertificate, "udap-test", X509KeyStorageFlags.Exportable);
+    using var caCert = X509CertificateLoader.LoadPkcs12FromFile(caCertificate, "udap-test", X509KeyStorageFlags.Exportable);
 
     using RSA rsaHostDockerInternal = RSA.Create(2048);
 

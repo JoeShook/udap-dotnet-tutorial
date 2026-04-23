@@ -30,7 +30,6 @@ namespace udap.idp.server.devdays;
 
 public static class SeedData
 {
-    private static Anchor anchor;
 
 
 
@@ -100,7 +99,7 @@ public static class SeedData
         //
         // Anchor localhost_community for Udap.Identity.Provider1
         //
-        var anchorLocalhostCert = new X509Certificate2(
+        var anchorLocalhostCert = X509CertificateLoader.LoadCertificateFromFile(
             Path.Combine(certStoreBasePath, "Community1/DevDaysCA_1.crt"));
 
         if ((await clientRegistrationStore.GetAnchors("udap://Community1"))
@@ -126,7 +125,7 @@ public static class SeedData
             //
             var x509Certificate2Collection = await clientRegistrationStore.GetIntermediateCertificates();
 
-            var intermediateCert = new X509Certificate2(
+            var intermediateCert = X509CertificateLoader.LoadCertificateFromFile(
                 Path.Combine(certStoreBasePath, "Community1/intermediates/DevDaysSubCA_1.crt"));
 
             if (x509Certificate2Collection != null && x509Certificate2Collection.ToList()
