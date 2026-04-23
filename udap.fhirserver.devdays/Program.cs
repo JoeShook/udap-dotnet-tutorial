@@ -40,7 +40,7 @@ builder.Services
 
     });
 
-builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection(Constants.UDAP_FILE_STORE_MANIFEST));
+builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection("UdapFileCertStoreManifest"));
 
 
 builder.Services.AddUdapMetadataServer(builder.Configuration)

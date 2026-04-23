@@ -29,7 +29,7 @@ const string connectionString = @"Data Source=udap.authserver.devdays.EntityFram
 builder.Services.AddRazorPages();
 
 builder.Services.Configure<UdapClientOptions>(builder.Configuration.GetSection("UdapClientOptions"));
-builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection(Constants.UDAP_FILE_STORE_MANIFEST));
+builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection("UdapFileCertStoreManifest"));
 
 builder.Services.AddUdapServer(
     options =>

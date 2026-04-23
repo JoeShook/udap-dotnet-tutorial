@@ -103,7 +103,7 @@ dotnet add package Udap.Metadata.Server
 #### :boom: Include services
 
 ```csharp
-builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection(Constants.UDAP_FILE_STORE_MANIFEST));
+builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection("UdapFileCertStoreManifest"));
 
 builder.Services.AddUdapMetadataServer(builder.Configuration)
     .AddSingleton<IPrivateCertificateStore>(sp =>
@@ -440,7 +440,7 @@ Then the following two lines will enabled the Idp UDAP Auth server to present si
 
 ```csharp
 
-  builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection(Constants.UDAP_FILE_STORE_MANIFEST));
+  builder.Services.Configure<UdapFileCertStoreManifest>(builder.Configuration.GetSection("UdapFileCertStoreManifest"));
 
   builder.Services.AddUdapMetadataServer(builder.Configuration);
 
