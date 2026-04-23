@@ -405,3 +405,5 @@ CertificateStore/udap-tutorial-dev-tls-cert.cer
 .DS_Store
 /.idea
 .claude/settings.local.json
+.claude/settings.local.json
+/.claude
