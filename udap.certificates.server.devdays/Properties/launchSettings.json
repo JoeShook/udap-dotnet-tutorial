@@ -5,10 +5,10 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://+:5034"
+        "ASPNETCORE_URLS": "http://localhost:5034"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://*:5034"
+      "applicationUrl": "http://localhost:5034"
     },
     "Container (Dockerfile)": {
       "commandName": "Docker",

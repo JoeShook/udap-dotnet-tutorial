@@ -44,6 +44,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="udap.metadata.options.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CertificateStore\Community1\DevDaysCA_1.crt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

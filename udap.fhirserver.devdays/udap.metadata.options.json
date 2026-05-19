@@ -1,0 +1,39 @@
+{
+  "UdapVersionsSupported": [ "1" ],
+  "UdapProfilesSupported": [ "udap_dcr", "udap_authn", "udap_authz", "udap_to" ],
+  "UdapAuthorizationExtensionsSupported": [],
+  "UdapAuthorizationExtensionsRequired": [],
+  "ScopesSupported": [ "openid", "system/*.read", "user/*.read", "patient/*.read" ],
+  "UdapCertificationsSupported": [ "http://MyUdapCertification", "http://MyUdapCertification2" ],
+  "UdapCertificationsRequired": [ "http://MyUdapCertification" ],
+  "GrantTypesSupported": [ "authorization_code", "refresh_token", "client_credentials" ],
+
+  "UdapMetadataConfigs": [
+    {
+      "Community": "udap://Community1",
+      "SignedMetadataConfig": {
+        "AuthorizationEndPoint": "https://host.docker.internal:5102/connect/authorize",
+        "TokenEndpoint": "https://host.docker.internal:5102/connect/token",
+        "RegistrationEndpoint": "https://host.docker.internal:5102/connect/register"
+      }
+    },
+    {
+      "Community": "udap://Community2",
+      "SignedMetadataConfig": {
+        "RegistrationSigningAlgorithms": [ "ES384" ],
+        "TokenSigningAlgorithms": [ "ES384" ],
+        "AuthorizationEndPoint": "https://host.docker.internal:5102/connect/authorize",
+        "TokenEndpoint": "https://host.docker.internal:5102/connect/token",
+        "RegistrationEndpoint": "https://host.docker.internal:5102/connect/register"
+      }
+    },
+    {
+      "Community": "udap://Community3",
+      "SignedMetadataConfig": {
+        "AuthorizationEndPoint": "https://host.docker.internal:5102/connect/authorize",
+        "TokenEndpoint": "https://host.docker.internal:5102/connect/token",
+        "RegistrationEndpoint": "https://host.docker.internal:5102/connect/register"
+      }
+    }
+  ]
+}

@@ -10,7 +10,7 @@
         "ASPNETCORE_Kestrel__Certificates__Default__Path": "../CertificateStore/udap-tutorial-dev-tls-cert.pfx"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://*:5202"
+      "applicationUrl": "https://localhost:5202"
     },   
     "Docker": {
       "commandName": "Docker",
