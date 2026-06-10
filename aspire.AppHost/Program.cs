@@ -1,62 +1,48 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+// Each app binds the port from its own launchSettings.json directly
+// (IsProxied = false). UDAP signed metadata embeds these exact host:port URLs
+// and each app presents its own host.docker.internal TLS cert, so Aspire's
+// default proxy (random app port + Aspire dev cert) cannot be used here.
+
+// Each app binds host.docker.internal directly (IsProxied = false). The auto
+// endpoint URL would otherwise display the machine hostname (a bind-all
+// address), so rewrite it in place to host.docker.internal. Extra contextual
+// links are added with WithUrl.
+
 builder.AddProject<Projects.udap_authserver_devdays>("udap-authserver-devdays")
-    .WithUrlForEndpoint("http",
-        url => url.DisplayLocation = UrlDisplayLocation.DetailsOnly)
-    .WithUrlForEndpoint("https",
-        url => url.DisplayLocation = UrlDisplayLocation.DetailsOnly)
-    .WithUrlForEndpoint("https", ep => new()
+    .WithEndpoint("https", e => e.IsProxied = false)
+    .WithUrlForEndpoint("https", url =>
     {
-        Url = "https://host.docker.internal:5102/",
-        DisplayText = "Data Holder Auth Server",
-        DisplayLocation = UrlDisplayLocation.SummaryAndDetails
+        url.Url = "https://host.docker.internal:5102/";
+        url.DisplayText = "Data Holder Auth Server";
     });
 
 builder.AddProject<Projects.udap_certificates_server_devdays>("udap-certificates-server-devdays")
-    .WithUrlForEndpoint("http",
-        url => url.DisplayLocation = UrlDisplayLocation.DetailsOnly)
-    .WithUrlForEndpoint("http", ep => new()
+    .WithEndpoint("http", e => e.IsProxied = false)
+    .WithUrlForEndpoint("http", url =>
     {
-        Url = "http://host.docker.internal:5034/",
-        DisplayText = "Static Certificate Server",
-        DisplayLocation = UrlDisplayLocation.SummaryAndDetails
+        url.Url = "http://host.docker.internal:5034/";
+        url.DisplayText = "Static Certificate Server";
     });
 
 builder.AddProject<Projects.udap_fhirserver_devdays>("udap-fhirserver-devdays")
-    .WithUrlForEndpoint("http",
-        url => url.DisplayLocation = UrlDisplayLocation.DetailsOnly)
-    .WithUrlForEndpoint("https",
-        url => url.DisplayLocation = UrlDisplayLocation.DetailsOnly)
-    .WithUrlForEndpoint("https", ep => new()
+    .WithEndpoint("https", e => e.IsProxied = false)
+    .WithUrlForEndpoint("https", url =>
     {
-        Url = "https://host.docker.internal:7017/fhir/r4",
-        DisplayText = "FHIR Server",
-        DisplayLocation = UrlDisplayLocation.SummaryAndDetails
+        url.Url = "https://host.docker.internal:7017/fhir/r4";
+        url.DisplayText = "FHIR Server";
     })
-    .WithUrlForEndpoint("https", ep => new()
-    {
-        Url = "https://host.docker.internal:7017/fhir/r4/.well-known/udap",
-        DisplayText = "Well-Known UDAP",
-        DisplayLocation = UrlDisplayLocation.SummaryAndDetails
-    })
-    .WithUrlForEndpoint("https", ep => new()
-    {
-        Url = "https://host.docker.internal:7017/fhir/r4/.well-known/udap/communities/ashtml",
-        DisplayText = "Communities",
-        DisplayLocation = UrlDisplayLocation.SummaryAndDetails
-    });
-    
+    .WithUrl("https://host.docker.internal:7017/fhir/r4/.well-known/udap", "Well-Known UDAP")
+    .WithUrl("https://host.docker.internal:7017/fhir/r4/.well-known/udap/communities/ashtml", "Communities");
+
 
 builder.AddProject<Projects.udap_idp_server_devdays>("udap-idp-server-devdays")
-    .WithUrlForEndpoint("http",
-        url => url.DisplayLocation = UrlDisplayLocation.DetailsOnly)
-    .WithUrlForEndpoint("https",
-        url => url.DisplayLocation = UrlDisplayLocation.DetailsOnly)
-    .WithUrlForEndpoint("https", ep => new()
+    .WithEndpoint("https", e => e.IsProxied = false)
+    .WithUrlForEndpoint("https", url =>
     {
-        Url = "https://host.docker.internal:5202/",
-        DisplayText = "Identity Server (Tiered OAuth)",
-        DisplayLocation = UrlDisplayLocation.SummaryAndDetails
+        url.Url = "https://host.docker.internal:5202/";
+        url.DisplayText = "Identity Server (Tiered OAuth)";
     });
 
 var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
