@@ -12,7 +12,7 @@
     {
       "Community": "udap://Community1",
       "SignedMetadataConfig": {
-        "AuthorizationEndPoint": "https://host.docker.internal:5102/connect/authorize",
+        "AuthorizationEndpoint": "https://host.docker.internal:5102/connect/authorize",
         "TokenEndpoint": "https://host.docker.internal:5102/connect/token",
         "RegistrationEndpoint": "https://host.docker.internal:5102/connect/register"
       }
@@ -22,7 +22,7 @@
       "SignedMetadataConfig": {
         "RegistrationSigningAlgorithms": [ "ES384" ],
         "TokenSigningAlgorithms": [ "ES384" ],
-        "AuthorizationEndPoint": "https://host.docker.internal:5102/connect/authorize",
+        "AuthorizationEndpoint": "https://host.docker.internal:5102/connect/authorize",
         "TokenEndpoint": "https://host.docker.internal:5102/connect/token",
         "RegistrationEndpoint": "https://host.docker.internal:5102/connect/register"
       }
@@ -30,7 +30,7 @@
     {
       "Community": "udap://Community3",
       "SignedMetadataConfig": {
-        "AuthorizationEndPoint": "https://host.docker.internal:5102/connect/authorize",
+        "AuthorizationEndpoint": "https://host.docker.internal:5102/connect/authorize",
         "TokenEndpoint": "https://host.docker.internal:5102/connect/token",
         "RegistrationEndpoint": "https://host.docker.internal:5102/connect/register"
       }
