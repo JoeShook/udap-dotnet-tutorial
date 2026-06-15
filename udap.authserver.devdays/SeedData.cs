@@ -64,7 +64,7 @@ public static class SeedData
         var communities = new List<Tuple<string, X509Certificate2>>();
         var certificateStorePath = "CertificateStore";
      
-        foreach (var folder in Directory.GetDirectories(certificateStorePath).Where(p => p.StartsWith("Community")))
+        foreach (var folder in Directory.GetDirectories(certificateStorePath, "Community*"))
         {
             var folderName = new DirectoryInfo(folder).Name;
             var anchorFile = Directory.GetFiles(folder, "*.crt").First();
