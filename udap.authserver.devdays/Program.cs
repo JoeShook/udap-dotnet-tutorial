@@ -8,6 +8,7 @@ using Udap.Server.Security.Authentication.TieredOAuth;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Udap.Common;
 using Udap.Client.Configuration;
+using Udap.Ssraa.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,15 @@ builder.Services.AddUdapServer(
     )
     .AddUdapResponseGenerators()
     .AddSmartV2Expander();
+
+// SSRAA authorization-extension enforcement for Community1 only.
+// Defaults require the hl7-b2b extension object on client_credentials token requests
+// (and require nothing extra on authorization_code). The community name must match the
+// DB community name seeded by SeedData (the folder name, e.g. "Community1").
+builder.Services.AddUdapSsraaValidation(options =>
+{
+    options.Communities.Add("Community1");
+});
 
 
 builder.Services.AddIdentityServer(options =>

@@ -36,6 +36,7 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.15.2" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="Udap.Server" Version="0.8.0" />
+    <PackageReference Include="Udap.Ssraa.Server" Version="0.8.0" />
     <PackageReference Include="Udap.UI" Version="0.8.0" />
   </ItemGroup>
 
