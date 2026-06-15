@@ -8,7 +8,7 @@
     {
       "Community": "udap://Community1",
       "SignedMetadataConfig": {
-        "AuthorizationEndPoint": "https://host.docker.internal:5202/connect/authorize",
+        "AuthorizationEndpoint": "https://host.docker.internal:5202/connect/authorize",
         "TokenEndpoint": "https://host.docker.internal:5202/connect/token",
         "RegistrationEndpoint": "https://host.docker.internal:5202/connect/register"
       }
