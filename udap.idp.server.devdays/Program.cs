@@ -68,9 +68,10 @@ app.UseHttpsRedirection();
 
 app.MapDefaultEndpoints();
 
-// Configure the HTTP request pipeline.
-
-app.UseHsts();
+// HSTS intentionally NOT enabled. This tutorial serves the static cert/CRL server over
+// plaintext HTTP on host.docker.internal:5034, and HSTS is domain-wide (not port-specific),
+// so a Strict-Transport-Security header from this IdP would force the browser to upgrade
+// http://host.docker.internal:5034 to HTTPS, which that server does not serve.
 
 app.UseSerilogRequestLogging();
 
