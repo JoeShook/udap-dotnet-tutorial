@@ -39,7 +39,11 @@ public class TestUsers
                         new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
                         new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                         new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
-                        new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(address), IdentityServerConstants.ClaimValueTypes.Json)
+                        new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(address), IdentityServerConstants.ClaimValueTypes.Json),
+                        // HL7 identifier: included in the profile scope by UdapIdentityResources, emitted in the IdP
+                        // id_token, then augmented into the auth server's id_token (UdapTokenResponseGenerator) and
+                        // carried through Tiered OAuth to the client. Value is the Identity Matching IG example.
+                        new Claim("hl7_identifier", "123e4567-e89b-12d3-a456-426614174000a")
                     }
                 },
                 new TestUser
