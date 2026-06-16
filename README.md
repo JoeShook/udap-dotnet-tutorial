@@ -1,8 +1,6 @@
 ﻿# udap-dotnet-tutorial
-Spin up a local UDAP playground.  Includes FHIR server, static certificates server UDAP Auth Server and UDAP IDP Server.
 
-
-[udap-dotnet](https://github.com/udap-tools/udap-dotnet) tutorial.
+A hands-on tutorial for [udap-dotnet](https://github.com/JoeShook/udap-dotnet), the open-source .NET SDK and reference implementations for UDAP. This repo spins up a complete local UDAP playground built on that SDK, including a FHIR server, a static certificates server, a UDAP Authorization Server, and a UDAP Identity Provider (IdP) server.
 
 UDAP is the acronym for [Unified Data Access Profiles](https://www.udap.org/).
 The HL7 "[Security IG](http://hl7.org/fhir/us/udap-security/)" is a constraint on UDAP.  The actual implementation guide has a long name of "Security for Scalable Registration, Authentication, and Authorization".
