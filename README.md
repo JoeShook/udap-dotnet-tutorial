@@ -48,11 +48,6 @@ sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keyc
 If the developer regenerates certificates with the udap.pki.devdays project during the Tutorial delete the udap.authserver.devdays.EntityFramework.db database.  And restart udap.authserver.devdays.
 
 
-### On Windows
-
-If the developer regenerates certificates with the udap.pki.devdays during the Tutorial they may then need to launch mmc.exe, the Certificates snap-in for the current user.  Go to Intermediate Certification Authorities and delete the DevDaysSubCA_1.  
-
-
 ## Project Summaries
 
 ### udap.pki.devdays
@@ -545,14 +540,11 @@ Validate the https://host.docker.internal:7017/fhir/r4/.well-known/udap signed m
 
 Notice in the image below.
 
-
-- :exclamation: <span style="color:red">(RevocationStatusUnknown) The revocation function was unable to check revocation for the certificate.</span>
-
-This error will be present in almost every case when a X509 Chain cannot be built and verified.  Always look at the other errors first.  For example, if an intermediate certificate cannot be resolved nor found in a trusted store, such as the Windows Certificate store or a Linux trust store then the ```RevocationStatusUnknown``` will pre presented by the ```Udap.Client``` during validation.  The ```Untrusted``` error should clue us into checking the ```Trust Anchor``` and ```Intermediate Certificate``` if one exists.  ```Intermediate Certificates``` can be resolved via the ```AIA (Authority Information Access)``` extension.  Look at the ```UdapEd``` tool to see where that extension points too.  Remember that ```Trust Anchor``` chosen for the ```Udap.Client``` is loaded into it' trusted root store.  It is the top of the store and the whole chain from ```Trust Anchor``` to the ```Client Certificate``` used to sign the metadata must be build and validated including ```CRL (Certificate Revocation List)``` checks.  This can be tricky especially in development while regenerating PKI structures and running tests.  Windows and Linux will cache the CRL requests and sometimes load intermediates into trust stores.  The ```UdapEd``` tool may evolve more to try and find these tricky strategies based on operating systems and visualize what is happening.
+Each problem is reported by the ```Udap.Client``` as a ```(Status) message``` pair (for example ```RevocationStatusUnknown```, ```OfflineRevocation```, ```Revoked```, ```NotTimeValid```, ```InvalidBasicConstraints```).  A ```RevocationStatusUnknown``` is raised when the chain otherwise builds but a ```CRL``` could not be downloaded or verified, so always look at the other problems first.  The ```Untrusted``` result is the one to focus on; it means the chain could not be built up to the supplied ```Trust Anchor```, which should clue us into checking the ```Trust Anchor``` and ```Intermediate Certificate``` if one exists.  ```Intermediate Certificates``` can be resolved via the ```AIA (Authority Information Access)``` extension.  Look at the ```UdapEd``` tool to see where that extension points too.  The whole chain from ```Trust Anchor``` to the ```Client Certificate``` used to sign the metadata must be built and validated, including ```CRL (Certificate Revocation List)``` checks.  The ```Udap.Client``` builds and validates this chain with ```BouncyCastle``` against the ```Trust Anchor``` you supply, rather than relying on the operating system's certificate stores, so chain building behaves consistently across Windows, Linux, and macOS and does not depend on (or pollute) the OS trust stores.  Note that CRL responses fetched over the network may still be cached, so during development while regenerating PKI structures and running tests an updated revocation list may not be picked up immediately.
 
 An actual revoked certificate will be reported like the following.  This can be tested by setting the **BaseUrl** to ```https://host.docker.internal:7016/fhir/r4``` and the **Community** to ```udap://Community3```.  **And** don't forget to choose the ```udap://Community3``` community anchor, otherwise you will not be able to build the chain.  Without a built chain the CRL endpoint cannot be checked because we do not trust the ```X509 Chain```. 
 
-- :exclamation: <span style="color:red">(Revoked) The certificate is revoked.</span>
+- :exclamation: <span style="color:red">(Revoked) Certificate is revoked per CRL at &lt;crl-url&gt;.</span>
 
 ---
 
