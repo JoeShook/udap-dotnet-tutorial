@@ -317,7 +317,7 @@ builder.Services.AddUdapSsraaValidation(options =>
 });
 ```
 
-The community name must match the community seeded into the database by ```SeedData``` (the ```CertificateStore``` folder name, e.g. ```Community1```).  A ```client_credentials``` request to Community1 without a valid ```hl7-b2b``` extension is rejected; Community2 and Community3 are unaffected.
+The community name must match a value in the ```UdapCommunities.Name``` column (e.g. ```Community1```).  A ```client_credentials``` request to Community1 without a valid ```hl7-b2b``` extension is rejected; Community2 and Community3 are unaffected.
 
 Configure IdentityServer
 Notice the ```UserInteraction``` configuration ensures we use the UDAP.UI package enhancements for facilitating UDAP Tiered OAuth for User Authentication. 
