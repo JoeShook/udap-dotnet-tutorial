@@ -302,6 +302,23 @@ dotnet add package Udap.UI
     .AddSmartV2Expander();
 ```
 
+#### :boom: Enforce SSRAA authorization rules (Community1)
+
+```txt
+dotnet add package Udap.Ssraa.Server
+```
+
+The "Security for Scalable Registration, Authentication, and Authorization" IG defines authorization-extension rules.  ```AddUdapSsraaValidation``` enforces them at the token endpoint.  With the defaults, a **```client_credentials```** token request must carry the **```hl7-b2b```** authorization extension object (```authorization_code``` requests require nothing extra).  Here it is scoped to **Community1 only**:
+
+```csharp
+builder.Services.AddUdapSsraaValidation(options =>
+{
+    options.Communities.Add("Community1");
+});
+```
+
+The community name must match the community seeded into the database by ```SeedData``` (the ```CertificateStore``` folder name, e.g. ```Community1```).  A ```client_credentials``` request to Community1 without a valid ```hl7-b2b``` extension is rejected; Community2 and Community3 are unaffected.
+
 Configure IdentityServer
 Notice the ```UserInteraction``` configuration ensures we use the UDAP.UI package enhancements for facilitating UDAP Tiered OAuth for User Authentication. 
 
