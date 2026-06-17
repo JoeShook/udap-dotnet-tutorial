@@ -298,6 +298,24 @@ File.Copy(
     true);
 
 
+//
+// CA/SubCA signing keys for the static certificates server so it can re-sign expired CRLs at startup.
+// These are private keys, so they are placed in a non-served SigningKeys folder (never under wwwroot).
+//
+foreach (var n in new[] { 1, 2, 3 })
+{
+    var anchorKeySource = $"{baseDir}/{certificateStore}/Community{n}/DevDaysCA_{n}.pfx";
+    var anchorKeyDest = $"{baseDir}/../udap.certificates.server.devdays/SigningKeys/DevDaysCA_{n}.pfx";
+    anchorKeyDest.EnsureDirectoryExistFromFilePath();
+    File.Copy(anchorKeySource, anchorKeyDest, true);
+
+    var intermediateKeySource = $"{baseDir}/{certificateStore}/Community{n}/intermediates/DevDaysSubCA_{n}.pfx";
+    var intermediateKeyDest = $"{baseDir}/../udap.certificates.server.devdays/SigningKeys/DevDaysSubCA_{n}.pfx";
+    intermediateKeyDest.EnsureDirectoryExistFromFilePath();
+    File.Copy(intermediateKeySource, intermediateKeyDest, true);
+}
+
+
 void MakeAuthorities(string communityStorePath,
     string anchorName,
     string intermediateName)

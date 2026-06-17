@@ -1,4 +1,5 @@
 using Microsoft.Extensions.FileProviders;
+using udap.certificates.server.devdays;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,14 @@ builder.Services.AddDirectoryBrowser();
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
+
+// Re-sign any expired/expiring CRLs before we start serving them so that the
+// BouncyCastle chain validator in Udap.Client never sees a stale revocation list.
+CrlMaintenance.RefreshExpiringCrls(
+    Path.Combine(app.Environment.WebRootPath, "crl"),
+    Path.Combine(AppContext.BaseDirectory, "SigningKeys"),
+    TimeSpan.FromDays(7),
+    app.Logger);
 
 // Configure the HTTP request pipeline.
 app.UseStaticFiles(new StaticFileOptions

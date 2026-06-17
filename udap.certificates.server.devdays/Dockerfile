@@ -26,5 +26,6 @@ RUN dotnet publish "./udap.certificates.server.devdays.csproj" -c $BUILD_CONFIGU
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+# --chown so the non-root app user owns wwwroot/crl and can re-sign expired CRLs at startup.
+COPY --chown=$APP_UID --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "udap.certificates.server.devdays.dll"]
